@@ -2,7 +2,7 @@ package queue
 
 import (
 	"context"
-	"items-service/dtos"
+	"items/dtos"
 )
 
 type PublisherMock struct{}

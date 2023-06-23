@@ -1,10 +1,10 @@
 package app
 
 import (
-	"items-service/clients/queue"
-	controllers "items-service/controllers"
-	service "items-service/services"
-	"items-service/services/repositories"
+	"items/clients/queue"
+	controllers "items/controllers"
+	service "items/services"
+	"items/services/repositories"
 	"time"
 )
 

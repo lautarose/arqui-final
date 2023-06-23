@@ -10,7 +10,7 @@ func MapUrls(router *gin.Engine, dependencies *Dependencies) {
 	// Products Mapping
 
 	router.GET("/items/:id", dependencies.ItemController.GetItemById)
-	router.POST("/items/load", dependencies.ItemController.InsertItem)
+	router.POST("/items/load", dependencies.ItemController.InsertItems)
 
 	fmt.Println("Finishing mappings configurations")
 }

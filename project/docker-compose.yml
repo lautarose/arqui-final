@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  rabbit:
+    image: rabbitmq:3-management
+    ports:
+     - "5671:5671"
+     - "5672:5672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+  solr:
+    image: solr
+    ports:
+     - "8983:8983"
+    command:
+      - solr-precreate
+      - items
+  mongo:
+    image: mongo:latest
+    container_name: "mongodb"
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+  memcached:
+    image: memcached:1.6.16
+    container_name: "memcached"
+    ports:
+      - "11211:11211"
+  items-service:
+    build:
+      context: ./../items-service
+      dockerfile: ./../items-service/items-service.dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    deploy:
+      mode: replicated
+      replicas: 1

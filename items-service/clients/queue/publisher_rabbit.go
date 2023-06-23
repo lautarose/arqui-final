@@ -1,7 +1,7 @@
 package queue
 
 import (
-	"items-service/dtos"
+	"items/dtos"
 	"strconv"
 
 	"context"
