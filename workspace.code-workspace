@@ -1,0 +1,22 @@
+{
+	"folders": [
+		{
+			"path": "search-service"
+		},
+		{
+			"path": "items-service"
+		},
+		{
+			"path": "frontend"
+		},
+		{
+			"path": "authentication-service"
+		},
+		{
+			"path": "user-service"
+		},
+		{
+			"path": "project"
+		}
+	]
+}
