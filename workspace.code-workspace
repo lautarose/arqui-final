@@ -13,10 +13,13 @@
 			"path": "authentication-service"
 		},
 		{
-			"path": "user-service"
+			"path": "project"
 		},
 		{
-			"path": "project"
+			"path": "users-service"
+		},
+		{
+			"path": "database"
 		}
 	]
 }
