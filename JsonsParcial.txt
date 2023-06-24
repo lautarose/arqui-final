@@ -1,0 +1,242 @@
+{
+    "title":"Casa",
+    "seller":"inmobiliaria",
+    "price":100000,
+    "currency":"usd",
+    "picture":"https://www.construyehogar.com/wp-content/uploads/2013/09/Fachada-casa-moderna-ancha.jpg",
+    "description":"Excelente casa en Barrio Nuevo Maurizzi, zona centro. A 500 mts de Dino Ruta 20
+Complejo cerrado con acceso con portón automático",
+    "state":"Cordoba",
+    "city":"Cordoba",
+    "street":"San Martin",
+    "number":125
+}
+{
+    "title":"Chalet",
+    "seller":"RE/MAX",
+    "price":50000,
+    "currency":"usd",
+    "picture":"https://lh3.googleusercontent.com/proxy/f07E4EwzwIbCXrG7ZIrLeM-yUl-g9kWOnRox1GcOyYvFOTdbfh8LYtTYsM5ixiOTZ8p0JxueanRIzs23_Gi8zcj6HjotaVxPfmvXKonKSlQl_zv9nA74MZwJTEihrnDU2s3k2KgrKdwlPz7igETyc38B9PdMLQo=w296-h202-n-k-rw-no-v1",
+    "description":"Este hermoso chalet se encuentra en La Falda, en la provincia de Córdoba, y alberga un jardín. Se encuentra a 200m de la avenida principal del Centro de La Falda y cuenta con  aparcamiento privado .",
+    "state":"cordoba",
+    "city":"La Falda",
+    "street":"Av. Eden",
+    "number":85
+}
+{
+    "title":"Departamento",
+    "seller":"RE/MAX",
+    "price":40000,
+    "currency":"usd",
+    "picture":"https://cf.bstatic.com/xdata/images/hotel/max1280x900/375898395.jpg?k=6ff305795642c37820079a6ec39fc71236f10d00a06afaaae57ec6afbf2874bf&o=&hp=1",
+    "description":"Los Departamentos Avvenire By Alojando se encuentran en Córdoba, en la provincia de Córdoba, cerca de la Manzana Jesuítica y la catedral de Córdoba, y ofrecen alojamiento con WiFi gratuita y acceso a una bañera de hidromasaje",
+    "state":"Cordoba",
+    "city":"Cordoba",
+    "street":"Rondeau",
+    "number":93
+}
+{
+    "title":"Departamento",
+    "seller":"Bienes Raices",
+    "price":60000,
+    "currency":"usd",
+    "picture":"https://cf.bstatic.com/xdata/images/hotel/max1280x900/298583260.jpg?k=a4b928f31129fb6fb3beb843318c250f36d4da6ac8919607f5ec37c91326801b&o=&hp=1",
+    "description":"El Departamento Cañada Completo se encuentra a menos de 1 km del centro comercial Patio Olmos, a 9 minutos a pie de la Manzana Jesuítica,El apartamento está equipado con 1 dormitorio, 1 baño, ropa de cama, toallas, TV de pantalla plana",
+    "state":"Cordoba",
+    "city":"Cordoba",
+    "street":"Av. Marcelo T. Alvear",
+    "number":68
+}
+{
+    "title":"Casa",
+    "seller":"Bienes Raices",
+    "price":150000,
+    "currency":"usd",
+    "picture":"https://static1.sosiva451.com/35142021/86c4694c-c3ae-46e1-be31-6810395243df_u_large.jpg",
+    "description":"Propiedad para USO COMERCIAL.Cuenta con Tres cocheras y una descubierta. Tres ingresos independientes a la propiedad. Calefacción por tiro balanceado. Quincho de paja con asador.",
+    "state":"Cordoba",
+    "city":"Cordoba",
+    "street":"Jeronimo Cardan",
+    "number":5600
+}
+{
+    "title":"Duplex",
+    "seller":"RE/MAX",
+    "price":70000,
+    "currency":"usd",
+    "picture":"https://static1.sosiva451.com/10425611/f38315eb-ca75-4b2f-a185-4eaf35a45b1c_u_large.jpg",
+    "description":" 360 metros cuadrados propios de terreno, el duplex cuenta con una cochera, dos baños, tres ambientes y dos dormitorios",
+    "state":"Cordoba",
+    "city":"Cordoba",
+    "street":"chamico",
+    "number":9046
+}
+{
+    "title":"Departamento",
+    "seller":"Bienes Raices",
+    "price":65000,
+    "currency":"usd",
+    "picture":"https://static.tokkobroker.com/pictures/112409982254289342182703238417508212980575008201796238623087525152957838164893.jpg",
+    "description":"El apartamento cuenta con 1 dormitorio, placard con interiores, baño completo con bañera, living comedor, balcón, cocina americana",
+    "state":"Cordoba",
+    "city":"Cordoba",
+    "street":"Hipolito Yrigoyen",
+    "number":384
+}
+{
+    "title":"Casa",
+    "seller":"RE/MAX",
+    "price":200000,
+    "currency":"usd",
+    "picture":"https://static1.sosiva451.com/69957611/6a6a6416-d0f4-436a-9f19-db77563babe2_u_large.jpg",
+    "description":"LAS MEJORES VISTAS PANORAMICAS, AMBIENTES UNICOS, CALEFACCION POR LOSA RADIANTE, PISCINA CON VISTAS A LAS SIERRAS, COUNTRY CON SEGURIDAD LAS 24 HS",
+    "state":"cordoba",
+    "city":"Cordoba",
+    "street":"Av. Los Alamos",
+    "number":1200
+}
+{
+    "title":"Departamento",
+    "seller":"Bienes Raices",
+    "price":55000,
+    "currency":"usd",
+    "picture":"https://cf.bstatic.com/xdata/images/hotel/max1280x900/371541963.jpg?k=9fd82be3f2631b5adbb0f6fc3a283b77fbb122119938c15580519bddebf14478&o=&hp=1",
+    "description":"El Departamento ETOILE II se encuentra en Villa Carlos Paz, a 100 metros del ayuntamiento y a 500 metros del puente Uruguay. Cuenta con piscina y 1 dormitorio",
+    "state":"cordoba",
+    "city":"Carlos Paz",
+    "street":"Av. San Martin",
+    "number":540
+}
+{
+    "title":"Casa",
+    "seller":"Bienes Raices",
+    "price":125000,
+    "currency":"usd",
+    "picture":"https://static1.sosiva451.com/7022348/c1d2c82e-8bb8-4be1-8277-fcda50a24636_u_large.jpg",
+    "description":"Esta hermosa casa esta ubicada en una zona muy tranquila, cuenta con 3 plantas, tiene una cochera cubierta, 8 ambientes, 2 baños y 3 dormitorios",
+    "state":"Cordoba",
+    "city":"Cordoba",
+    "street":"Andres Maria Ampere",
+    "number":7403
+}
+{
+    "title":"Casa",
+    "seller":"inmobiliaria",
+    "price":230000,
+    "currency":"usd",
+    "picture":"https://media.er2.co/es/cordoba/5ae9746c2393f/635/5d5fcb1d27e3d.jpg",
+    "description":"Casa sobre el Lago los Molinos. Posee pileta con solarium, salida directa al lago, cochera cerrada con capacidad para dos vehiculos, asador, mesa de pool y 4 dormitorios",
+    "state":"cordoba",
+    "city":"Villa ciudad de america",
+    "street":"Rural",
+    "number":5360
+}
+{
+    "title":"Departamento",
+    "seller":"inmobiliaria",
+    "price":90000,
+    "currency":"usd",
+    "picture":"https://media.staticontent.com/media/pictures/e2079f31-202d-49f9-88f2-60ea812fb7eb",
+    "description":"El departamento se encuentra en el piso 14, cuenta, en planta baja con un living comedor amplio con salía hacia el balcón, cocina integrada, amoblada con bajo mesada y sus correspondientes artefactos (cocina, calefón) a su vez posee un baño social. En planta alta se encuentra el dormitorio con placard con divisiones interiores, balcón y un baño completo con bañera",
+    "state":"cordoba",
+    "city":"cordoba",
+    "street":"obispo oro",
+    "number":256
+}
+{
+    "title":"Casa",
+    "seller":"inmobiliaria",
+    "price":149000,
+    "currency":"usd",
+    "picture":"https://http2.mlstatic.com/D_NQ_NP_2X_811136-MLA52324072083_112022-F.webp",
+    "description":"Casa de 3 dormitorios a metros de Av Rodriguez del busto La misma consta de : Jardin con Rejas, Living, Cocina Comedor, Pasillo, 2 Baños, 3 Dormitorios, Cochera Techada, Patio y quincho con asado",
+    "state":"cordoba",
+    "city":"cordoba",
+    "street":"Juan Batlle Planas",
+    "number":2600
+}
+{
+     "title":"Departamento",
+    "seller":"Bienes y Raices",
+    "price":120000,
+    "currency":"usd",
+    "picture":"https://http2.mlstatic.com/D_NQ_NP_972512-MLA46922674349_072021-O.webp",
+    "description":"Este bello departamento posee una superficie total de 146 metros cuadrados y 4 ambientes, ademas cuenta con una terraza con parrila y pileta",
+    "state":"cordoba",
+    "city":"cordoba",
+    "street":"obispo salguero",
+    "number":510
+}
+{
+    "title":"Duplex",
+    "seller": inmobiliaria",
+    "price":100000,
+    "currency":"usd",
+    "picture":"https://imgar.zonapropcdn.com/avisos/resize/1/00/43/86/00/72/1200x1200/1679441058.jpg",
+    "description":"excelente duplex en tejas del sur, 3 dormitorios ( 2 grandes y uno chico), 2 baños, patio, galeria con asador, cocina toda equipada, luminaria led toda instalada",
+    "state":"cordoba",
+    "city":"cordoba",
+    "street":"Melincuente",
+    "number":750
+}
+{
+    "title":"lote",
+    "seller":"inmobiliaria",
+    "price":230000,
+    "currency":"usd",
+    "picture":"https://http2.mlstatic.com/D_NQ_NP_732988-MLA51328376766_082022-O.webp",
+    "description":"ofrecemos a la venta excelente lote de 1500 metros cuadrados ubicado en el country LA SANTINA en zona sur camino san carlos. El country dispone de amenities ( pileta, gimnasio, cancha de tenis, futbol )",
+    "state":"cordoba",
+    "city":"cordoba",
+    "street":"av ohiggins",
+    "number":5300
+}
+{
+    "title":"Casa",
+    "seller":"Bienes Raices",
+    "price":180000,
+    "currency":"usd",
+    "picture":"https://imgar.zonapropcdn.com/avisos/resize/1/00/46/86/72/84/1200x1200/1743857879.jpg",
+    "description":"Planta Alta: 1 dormitorio en suite. 2 Dormitorios con placard y acceso a amplia terraza 1 Baño completo. Acceso a la última Terraza que está calculada para albergar una pileta, donde se puede configurar una terraza mirador con pileta. Planta Baja: living comedor y cocina amplía integrado Lavadero independiente Toilette Cochera/quincho de 8m x 7.50m para 3 vehículos cómodamente Quincho equipado con mesada pileta y asador de dos metros Instalación para Calefacción central",
+    "state":"cordoba",
+    "city":"La calera",
+    "street":"Los claveles",
+    "number":325
+}
+{
+    "title":"Departamento",
+    "seller":"inmobiliaria",
+    "price":110000,
+    "currency":"usd",
+    "picture":"https://t-cf.bstatic.com/xdata/images/hotel/max1024x768/225730617.jpg?k=db5298721311de15df99586d45fe8564de9bba1867e01b3e3f473700d1b4be5a&o=&hp=1",
+    "description":"El Departamento boutique en nueva cordoba, situado en el distrito Nueva Córdoba de Córdoba, dispone de aire acondicionado, balcón y vistas a la ciudad. Este alojamiento se encuentra a 1,6 km de la catedral de Córdoba y a 1,7 km del centro comercial Patio Olmos",
+    "state":"cordoba",
+    "city":"cordoba",
+    "street":"Rondeau",
+    "number":615
+}
+{
+    "title":"Casa",
+    "seller":"RE/MAX",
+    "price":220000,
+    "currency":"usd",
+    "picture":"https://imgar.zonapropcdn.com/avisos/resize/1/00/49/31/82/49/1200x1200/1799056314.jpg",
+    "description":"RE/MAX te presenta una oportunidad única para tener tu casa en las sierras de Córdoba. Para vivir todo el año o para vacacionar, esta propiedad cuenta con todas las comodidades necesarias, fácil acceso desde Ruta Nacional 38 por asfalto y una espectacular vista a las sierras. La casa posee: 4 habitaciones, cocina separada, comedor, 2 Salas de estar, 2 baños completos",
+    "state":"cordoba",
+    "city":"Cosquin",
+    "street":"Villa pan de azucar",
+    "number": 1021
+}
+{
+    "title":"terreno",
+    "seller":"inmobiliaria",
+    "price":69000,
+    "currency":"usd",
+    "picture":"https://http2.mlstatic.com/D_NQ_NP_791494-MLA49728772526_042022-O.webp",
+    "description":"Lote de 1700 metros cuadrados con Vistas al  Dique Los Molinos y Sierras! Puerto del águila! Imaginate el AGUA del Dique Los Molinos a POCOS METROS de TU LOTE con la Sierras de Fondo",
+    "state":"cordoba",
+    "city":"Potrero de garay",
+    "street":"Puerto del aguila",
+    "number":0
+}
+

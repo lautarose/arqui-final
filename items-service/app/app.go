@@ -6,5 +6,5 @@ func StartApp() {
 	router := gin.Default()
 	deps := BuildDependencies()
 	MapUrls(router, deps)
-	_ = router.Run(":8080")
+	_ = router.Run(":8090")
 }

@@ -31,9 +31,21 @@ services:
     ports:
       - "11211:11211"
   items-service:
+    container_name: "items-service"
     build:
       context: ./../items-service
       dockerfile: ./../items-service/items-service.dockerfile
+    restart: always
+    ports:
+      - "8090:8090"
+    deploy:
+      mode: replicated
+      replicas: 1
+  search-service:
+    container_name: "search-service"
+    build:
+      context: ./../search-service
+      dockerfile: ./../search-service/search-service.dockerfile
     restart: always
     ports:
       - "8080:8080"
