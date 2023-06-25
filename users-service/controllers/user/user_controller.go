@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	service "user/services"
+	service "user/services/user"
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"

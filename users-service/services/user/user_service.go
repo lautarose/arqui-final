@@ -2,15 +2,15 @@ package services
 
 import (
 	userCliente "user/clients"
-	dto "user/dtos"
+	userDtos "user/dtos/user"
 )
 
 type userService struct{}
 
 type userServiceInterface interface {
-	GetUserById(id int) (dto.UserDto, error)
-	GetUserByUsername(string) (dto.UserDto, error)
-	GetUsers() (dto.UsersResponseDtos, error)
+	GetUserById(id int) (userDtos.UserDto, error)
+	GetUserByUsername(string) (userDtos.UserDto, error)
+	GetUsers() (userDtos.UsersResponseDtos, error)
 }
 
 var (
@@ -21,10 +21,10 @@ func init() {
 	UserService = &userService{}
 }
 
-func (s *userService) GetUserById(id int) (dto.UserDto, error) {
+func (s *userService) GetUserById(id int) (userDtos.UserDto, error) {
 
 	user, err := userCliente.GetUserById(id)
-	var userDto dto.UserDto
+	var userDto userDtos.UserDto
 
 	if err != nil {
 		return userDto, err
@@ -41,16 +41,16 @@ func (s *userService) GetUserById(id int) (dto.UserDto, error) {
 	return userDto, nil
 }
 
-func (s *userService) GetUsers() (dto.UsersResponseDtos, error) {
+func (s *userService) GetUsers() (userDtos.UsersResponseDtos, error) {
 	users, err := userCliente.GetUsers()
-	var usersDto dto.UsersResponseDtos
+	var usersDto userDtos.UsersResponseDtos
 
 	if err != nil {
 		return usersDto, err
 	}
 
 	for _, user := range users {
-		var userDto dto.UsersResponseDto
+		var userDto userDtos.UsersResponseDto
 		userDto.Name = user.Name
 		userDto.LastName = user.LastName
 		userDto.UserName = user.UserName
@@ -62,10 +62,10 @@ func (s *userService) GetUsers() (dto.UsersResponseDtos, error) {
 	return usersDto, nil
 }
 
-func (s *userService) GetUserByUsername(username string) (dto.UserDto, error) {
+func (s *userService) GetUserByUsername(username string) (userDtos.UserDto, error) {
 
 	user, err := userCliente.GetUserByUsername(username)
-	var userDto dto.UserDto
+	var userDto userDtos.UserDto
 
 	if err != nil {
 		return userDto, err

@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	service "user/services"
+	service "user/services/login"
 
 	dto "user/dtos/login"
 

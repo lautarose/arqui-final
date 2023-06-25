@@ -1,6 +1,6 @@
 package app
 
-import userController "user/controllers"
+import userController "user/controllers/user"
 
 // MapUrls maps the urls
 func MapUrls() {
