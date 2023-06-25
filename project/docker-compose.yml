@@ -30,6 +30,8 @@ services:
     command:
       - solr-precreate
       - items
+    volumes:
+      - ./solr-config/managed-schema:/opt/solr/server/solr/configsets/_default/conf/managed-schema
   mongo:
     image: mongo:latest
     container_name: "mongodb"

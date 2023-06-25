@@ -1,16 +1,15 @@
-{
+[{
     "title":"Casa",
     "seller":"inmobiliaria",
     "price":100000,
     "currency":"usd",
     "picture":"https://www.construyehogar.com/wp-content/uploads/2013/09/Fachada-casa-moderna-ancha.jpg",
-    "description":"Excelente casa en Barrio Nuevo Maurizzi, zona centro. A 500 mts de Dino Ruta 20
-Complejo cerrado con acceso con portón automático",
+    "description":"Excelente casa en Barrio Nuevo Maurizzi, zona centro. A 500 mts de Dino Ruta 20 Complejo cerrado con acceso con portón automático",
     "state":"Cordoba",
     "city":"Cordoba",
     "street":"San Martin",
     "number":125
-}
+},
 {
     "title":"Chalet",
     "seller":"RE/MAX",
@@ -22,7 +21,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"La Falda",
     "street":"Av. Eden",
     "number":85
-}
+},
 {
     "title":"Departamento",
     "seller":"RE/MAX",
@@ -34,7 +33,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"Cordoba",
     "street":"Rondeau",
     "number":93
-}
+},
 {
     "title":"Departamento",
     "seller":"Bienes Raices",
@@ -46,7 +45,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"Cordoba",
     "street":"Av. Marcelo T. Alvear",
     "number":68
-}
+},
 {
     "title":"Casa",
     "seller":"Bienes Raices",
@@ -58,7 +57,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"Cordoba",
     "street":"Jeronimo Cardan",
     "number":5600
-}
+},
 {
     "title":"Duplex",
     "seller":"RE/MAX",
@@ -70,7 +69,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"Cordoba",
     "street":"chamico",
     "number":9046
-}
+},
 {
     "title":"Departamento",
     "seller":"Bienes Raices",
@@ -82,7 +81,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"Cordoba",
     "street":"Hipolito Yrigoyen",
     "number":384
-}
+},
 {
     "title":"Casa",
     "seller":"RE/MAX",
@@ -94,7 +93,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"Cordoba",
     "street":"Av. Los Alamos",
     "number":1200
-}
+},
 {
     "title":"Departamento",
     "seller":"Bienes Raices",
@@ -106,7 +105,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"Carlos Paz",
     "street":"Av. San Martin",
     "number":540
-}
+},
 {
     "title":"Casa",
     "seller":"Bienes Raices",
@@ -118,7 +117,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"Cordoba",
     "street":"Andres Maria Ampere",
     "number":7403
-}
+},
 {
     "title":"Casa",
     "seller":"inmobiliaria",
@@ -130,7 +129,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"Villa ciudad de america",
     "street":"Rural",
     "number":5360
-}
+},
 {
     "title":"Departamento",
     "seller":"inmobiliaria",
@@ -142,7 +141,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"cordoba",
     "street":"obispo oro",
     "number":256
-}
+},
 {
     "title":"Casa",
     "seller":"inmobiliaria",
@@ -154,7 +153,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"cordoba",
     "street":"Juan Batlle Planas",
     "number":2600
-}
+},
 {
      "title":"Departamento",
     "seller":"Bienes y Raices",
@@ -166,10 +165,10 @@ Complejo cerrado con acceso con portón automático",
     "city":"cordoba",
     "street":"obispo salguero",
     "number":510
-}
+},
 {
     "title":"Duplex",
-    "seller": inmobiliaria",
+    "seller": "inmobiliaria",
     "price":100000,
     "currency":"usd",
     "picture":"https://imgar.zonapropcdn.com/avisos/resize/1/00/43/86/00/72/1200x1200/1679441058.jpg",
@@ -178,7 +177,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"cordoba",
     "street":"Melincuente",
     "number":750
-}
+},
 {
     "title":"lote",
     "seller":"inmobiliaria",
@@ -190,7 +189,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"cordoba",
     "street":"av ohiggins",
     "number":5300
-}
+},
 {
     "title":"Casa",
     "seller":"Bienes Raices",
@@ -202,7 +201,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"La calera",
     "street":"Los claveles",
     "number":325
-}
+},
 {
     "title":"Departamento",
     "seller":"inmobiliaria",
@@ -214,7 +213,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"cordoba",
     "street":"Rondeau",
     "number":615
-}
+},
 {
     "title":"Casa",
     "seller":"RE/MAX",
@@ -226,7 +225,7 @@ Complejo cerrado con acceso con portón automático",
     "city":"Cosquin",
     "street":"Villa pan de azucar",
     "number": 1021
-}
+},
 {
     "title":"terreno",
     "seller":"inmobiliaria",
@@ -238,5 +237,5 @@ Complejo cerrado con acceso con portón automático",
     "city":"Potrero de garay",
     "street":"Puerto del aguila",
     "number":0
-}
+}]
 

@@ -17,9 +17,6 @@
 		},
 		{
 			"path": "users-service"
-		},
-		{
-			"path": "database"
 		}
 	]
 }

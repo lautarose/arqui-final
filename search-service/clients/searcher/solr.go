@@ -6,10 +6,15 @@ import (
 	"log"
 	"net/http"
 	dtos "search/dtos"
+	"strings"
 )
 
+// "http://solr:8983/solr/items/query?q=*:*" + query + "*"
+//
+//	http://solr:8983/solr/items/select?q=catch_all:
 func GetItemsByQuery(query string) (dtos.ItemsDto, error) {
-	url := "http://solr:8983/solr/items/query?q=description:*" + query + "*"
+	refactoredQuery := ReplacePlusWithSpace(query)
+	url := "http://solr:8983/solr/items/select?q=catch_all:" + refactoredQuery
 	r, err := http.Get(url)
 
 	if err != nil {
@@ -62,4 +67,11 @@ func ParseBody(bytes []byte) (dtos.BodyDto, error) {
 		return dtos.BodyDto{}, err
 	}
 	return body, nil
+}
+
+func ReplacePlusWithSpace(q string) string {
+	// Reemplaza los símbolos "+" por "%20"
+	q = strings.ReplaceAll(q, "+", "%20")
+
+	return q
 }
