@@ -78,20 +78,3 @@ func (s *userService) GetUserByUsername(username string) (dto.UserDto, error) {
 	userDto.Email = user.Email
 	return userDto, nil
 }
-
-func (s *userService) GetUserByEmail(email string) (dto.UserDto, error) {
-
-	user, err := userCliente.GetUserByEmail(email)
-	var userDto dto.UserDto
-
-	if err != nil {
-		return userDto, err
-	}
-
-	userDto.Name = user.Name
-	userDto.LastName = user.LastName
-	userDto.UserName = user.UserName
-	userDto.Id = user.UserID
-	userDto.Email = user.Email
-	return userDto, nil
-}

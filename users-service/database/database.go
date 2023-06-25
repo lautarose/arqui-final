@@ -18,8 +18,8 @@ var (
 
 func init() {
 	// DB Connections Paramters
-	DBName := "users"      //variable de entorno para nombre de la base de datos
-	DBUser := "user" //variable de entorno para el usuario de la base de datos
+	DBName := "users" //variable de entorno para nombre de la base de datos
+	DBUser := "user"  //variable de entorno para el usuario de la base de datos
 	//DBPass := ""
 	DBPass := "password" //variable de entorno para la pass de la base de datos
 	DBHost := "mysql_users"
