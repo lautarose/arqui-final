@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"items/dtos"
 	service "items/services"
 	e "items/utils/errors/errors"
