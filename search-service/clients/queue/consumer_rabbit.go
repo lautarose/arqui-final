@@ -1,7 +1,6 @@
 package clients
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 
@@ -19,59 +18,80 @@ func Consume() error {
 		return err
 	}
 
-	q, err := ch.QueueDeclare(
-		"task_queue", // name
-		false,        // durable
-		false,        // delete when unused
-		false,        // exclusive
-		false,        // no-wait
-		nil,          // arguments
-	)
-	if err != nil {
-		return err
-	}
+	queues := []string{"item-insert-queue", "item-modification-queue", "item-deletion-queue"}
 
-	msgs, err := ch.Consume(
-		q.Name, // queue
-		"",     // consumer
-		true,   // auto-ack
-		false,  // exclusive
-		false,  // no-local
-		false,  // no-wait
-		nil,    // args
-	)
-	if err != nil {
-		return err
-	}
-
-	var forever chan struct{}
-
-	go func() {
-		for d := range msgs {
-			log.Printf("Received a message: %s", d.Body)
-
-			r, err := getItem(string(d.Body))
-
-			if err != nil {
-				log.Println("cannot get item")
-			}
-
-			res, err := insertItem(r)
-
-			if err != nil {
-				log.Print("cannot insert item")
-				log.Println(res.Body)
-			} else {
-				log.Println("item inserted")
-				log.Println(res.Body)
-			}
+	for _, queue := range queues {
+		q, err := ch.QueueDeclare(
+			queue, // name
+			false, // durable
+			false, // delete when unused
+			false, // exclusive
+			false, // no-wait
+			nil,   // arguments
+		)
+		if err != nil {
+			return err
 		}
-	}()
 
-	log.Printf(" [*] Waiting for messages. To exit press CTRL+C")
-	<-forever
+		msgs, err := ch.Consume(
+			q.Name, // queue
+			"",     // consumer
+			true,   // auto-ack
+			false,  // exclusive
+			false,  // no-local
+			false,  // no-wait
+			nil,    // args
+		)
+		if err != nil {
+			return err
+		}
 
-	return nil
+		go consumeMessages(queue, msgs)
+	}
+
+	log.Printf(" [*] Waiting for messages. To exit, press CTRL+C")
+	select {}
+}
+
+func consumeMessages(queue string, msgs <-chan amqp.Delivery) {
+	for d := range msgs {
+		log.Printf("Received a message from queue '%s': %s", queue, d.Body)
+
+		switch queue {
+		case "item-insert-queue":
+			handleInsertMessage(d.Body)
+		case "item-modification-queue":
+			handleModificationMessage(d.Body)
+		case "item-deletion-queue":
+			handleDeletionMessage(d.Body)
+		}
+	}
+}
+
+func handleInsertMessage(body []byte) {
+	r, err := getItem(string(body))
+	if err != nil {
+		log.Println("Cannot get item:", err)
+		return
+	}
+
+	res, err := insertItem(r)
+	if err != nil {
+		log.Println("Cannot insert item:", err)
+		log.Println(res.Body)
+	} else {
+		log.Println("Item inserted:", res.Body)
+	}
+}
+
+func handleModificationMessage(body []byte) {
+	// Handle modification message logic here
+	log.Println("Received a modification message:", string(body))
+}
+
+func handleDeletionMessage(body []byte) {
+	// Handle deletion message logic here
+	log.Println("Received a deletion message:", string(body))
 }
 
 func getItem(id string) (*http.Response, error) {
@@ -97,13 +117,4 @@ func insertItem(r *http.Response) (*http.Response, error) {
 	}
 
 	return r, nil
-}
-
-func ParseBody(bytes []byte) (string, error) {
-	var id string
-	if err := json.Unmarshal(bytes, &id); err != nil {
-		log.Println(err)
-		return "0", err
-	}
-	return id, nil
 }

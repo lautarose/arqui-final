@@ -37,12 +37,12 @@ func NewRabbitmq(host string, port int) *RabbitMQ {
 
 func (queue RabbitMQ) Publish(ctx context.Context, item dtos.ItemDto) error {
 	q, err := queue.Channel.QueueDeclare(
-		"task_queue", // name
-		false,        // durable
-		false,        // delete when unused
-		false,        // exclusive
-		false,        // no-wait
-		nil,          // arguments
+		"item-insert-queue", // name
+		false,               // durable
+		false,               // delete when unused
+		false,               // exclusive
+		false,               // no-wait
+		nil,                 // arguments
 	)
 	if err != nil {
 		return err
