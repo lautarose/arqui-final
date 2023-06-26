@@ -2,11 +2,12 @@ package services
 
 import (
 	"errors"
-	"os"
+	"fmt"
+
 	userCliente "user/clients"
 	loginDto "user/dtos/login"
+	jwtUtils "user/utils/jwt"
 
-	"github.com/dgrijalva/jwt-go"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -25,7 +26,6 @@ func init() {
 }
 
 func (s *loginService) Login(loginReq loginDto.LoginRequestDto) (loginDto.LoginResponseDto, error) {
-
 	username := loginReq.Username
 	pass := loginReq.Password
 	log.Debug("pass", pass)
@@ -38,21 +38,20 @@ func (s *loginService) Login(loginReq loginDto.LoginRequestDto) (loginDto.LoginR
 	}
 
 	if user.Pwd != pass {
-		err = errors.New("incorrect password")
+		err = errors.New("incorrect credentials")
 		log.Println(err)
 		return loginResp, err
 	}
+	
+	token, err := jwtUtils.GenerateToken(user.UserID)
+	if err != nil {
+		err = errors.New("error generating token")
+		return loginResp, err
+	}
 
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"username": loginReq.Username,
-		"password": loginReq.Password,
-	})
+	fmt.Println("genera token")
 
-	secretKey := os.Getenv("PROY_JWT_KEY")
-
-	var jwtKey = []byte(secretKey)
-
-	loginResp.Token, _ = token.SignedString(jwtKey)
+	loginResp.Token = token
 
 	return loginResp, nil
 }

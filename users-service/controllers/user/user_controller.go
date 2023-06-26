@@ -2,35 +2,26 @@ package controllers
 
 import (
 	"net/http"
-	"strconv"
 
 	service "user/services/user"
 
 	"github.com/gin-gonic/gin"
-	log "github.com/sirupsen/logrus"
 )
 
-func GetUserById(c *gin.Context) {
-	log.Debug("User id to load: " + c.Param("id"))
+func GetUser(c *gin.Context) {
+	auth := c.GetHeader("Authorization")
 
-	id, _ := strconv.Atoi(c.Param("id"))
-	userDto, err := service.UserService.GetUserById(id)
+	if auth == "" {
+		c.JSON(http.StatusForbidden, nil)
+		return
+	}
+
+	userDto, err := service.UserService.GetUser(auth)
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, userDto)
+		c.JSON(http.StatusForbidden, nil)
 		return
 	}
 
 	c.JSON(http.StatusOK, userDto)
-}
-
-func GetUsers(c *gin.Context) {
-	usersDto, err := service.UserService.GetUsers()
-
-	if err != nil {
-		c.JSON(http.StatusBadRequest, usersDto)
-		return
-	}
-
-	c.JSON(http.StatusOK, usersDto)
 }
