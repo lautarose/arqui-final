@@ -70,10 +70,6 @@ func (ctrl *Controller) InsertItems(c *gin.Context) {
 		itemsToInsert = append(itemsToInsert, item)
 	}
 
-	for _, item := range itemsToInsert {
-		fmt.Println("item:", item)
-	}
-
 	items, apiErr := ctrl.service.InsertItems(c.Request.Context(), itemsToInsert)
 	if apiErr != nil {
 		c.JSON(apiErr.Status(), apiErr)
