@@ -1,6 +1,7 @@
 package model
 
 type Item struct {
+	UserID      int     `bson:"user_id"`
 	Title       string  `bson:"title"`
 	Seller      string  `bson:"seller"`
 	Price       float64 `bson:"price"`

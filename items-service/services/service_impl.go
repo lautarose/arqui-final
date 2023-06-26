@@ -7,7 +7,7 @@ import (
 	"items/clients/queue"
 	"items/dtos"
 	"items/services/repositories"
-	e "items/utils/errors"
+	e "items/utils/errors/errors"
 	"net/http"
 	"os"
 	"path/filepath"

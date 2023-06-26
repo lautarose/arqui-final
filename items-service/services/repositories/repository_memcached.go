@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"items/dtos"
-	e "items/utils/errors"
+	e "items/utils/errors/errors"
 
 	"github.com/bradfitz/gomemcache/memcache"
 	json "github.com/json-iterator/go"

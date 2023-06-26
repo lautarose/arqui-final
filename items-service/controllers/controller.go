@@ -1,10 +1,13 @@
 package controllers
 
 import (
+	"fmt"
 	"items/dtos"
 	service "items/services"
-	e "items/utils/errors"
+	e "items/utils/errors/errors"
+	jwt "items/utils/jwt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,14 +32,49 @@ func (ctrl *Controller) GetItemById(c *gin.Context) {
 }
 
 func (ctrl *Controller) InsertItems(c *gin.Context) {
+
+	auth := c.GetHeader("Authorization")
+
+	if auth == "" {
+		c.JSON(http.StatusForbidden, nil)
+		return
+	}
+
+	claims, err := jwt.VerifyToken(auth)
+
+	if err != nil {
+		apiErr := e.NewForbiddenApiError(err.Error())
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+
+	id, err := strconv.Atoi(claims.Id)
+
+	if err != nil {
+		apiErr := e.NewInternalServerApiError("cannot convert claim", err)
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+
 	var items dtos.ItemsDto
+
 	if err := c.BindJSON(&items); err != nil {
 		apiErr := e.NewBadRequestApiError(err.Error())
 		c.JSON(apiErr.Status(), apiErr)
 		return
 	}
 
-	items, apiErr := ctrl.service.InsertItems(c.Request.Context(), items)
+	var itemsToInsert dtos.ItemsDto
+	for _, item := range items {
+		item.UserID = id
+		itemsToInsert = append(itemsToInsert, item)
+	}
+
+	for _, item := range itemsToInsert {
+		fmt.Println("item:", item)
+	}
+
+	items, apiErr := ctrl.service.InsertItems(c.Request.Context(), itemsToInsert)
 	if apiErr != nil {
 		c.JSON(apiErr.Status(), apiErr)
 		return

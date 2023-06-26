@@ -3,10 +3,10 @@ package repositories
 import (
 	"context"
 	"items/dtos"
-	"items/utils/errors"
+	e "items/utils/errors/errors"
 )
 
 type Repository interface {
-	GetItemById(ctx context.Context, id string) (dtos.ItemDto, errors.ApiError)
-	InsertItems(ctx context.Context, item dtos.ItemsDto) (dtos.ItemsDto, errors.ApiError)
+	GetItemById(ctx context.Context, id string) (dtos.ItemDto, e.ApiError)
+	InsertItems(ctx context.Context, item dtos.ItemsDto) (dtos.ItemsDto, e.ApiError)
 }

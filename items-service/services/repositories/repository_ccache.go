@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"items/dtos"
-	e "items/utils/errors"
+	e "items/utils/errors/errors"
 	"time"
 
 	"github.com/karlseguin/ccache/v2"

@@ -2,7 +2,6 @@ package services
 
 import (
 	"strconv"
-	"strings"
 	userCliente "user/clients"
 	userDtos "user/dtos/user"
 	jwtUtils "user/utils/jwt"
@@ -25,8 +24,8 @@ func init() {
 func (s *userService) GetUser(authToken string) (userDtos.UsersResponseDto, error) {
 	//controlar authToken
 	var userDto userDtos.UsersResponseDto
-	tokenString := strings.Split(authToken, " ")[1]
-	claims, err := jwtUtils.VerifyToken(tokenString)
+
+	claims, err := jwtUtils.VerifyToken(authToken)
 
 	if err != nil {
 		return userDto, err

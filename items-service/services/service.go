@@ -3,7 +3,7 @@ package services
 import (
 	"context"
 	"items/dtos"
-	e "items/utils/errors"
+	e "items/utils/errors/errors"
 )
 
 type Service interface {

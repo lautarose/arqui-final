@@ -2,6 +2,7 @@ package dtos
 
 type ItemDto struct {
 	Id          string  `json:"id"`
+	UserID      int     `json:"user_id"`
 	Title       string  `json:"title"`
 	Seller      string  `json:"seller"`
 	Price       float64 `json:"price"`

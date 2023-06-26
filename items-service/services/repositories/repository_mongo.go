@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"items/dtos"
 	model "items/models"
-	e "items/utils/errors"
+	e "items/utils/errors/errors"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -59,6 +59,7 @@ func (repo *RepositoryMongoDB) GetItemById(ctx context.Context, id string) (dtos
 	}
 	return dtos.ItemDto{
 		Id:          id,
+		UserID:      item.UserID,
 		Title:       item.Title,
 		Seller:      item.Seller,
 		Price:       item.Price,
@@ -76,6 +77,7 @@ func (repo *RepositoryMongoDB) InsertItems(ctx context.Context, items dtos.Items
 	var itemsResponse dtos.ItemsDto
 	for _, item := range items {
 		result, err := repo.Database.Collection(repo.Collection).InsertOne(context.TODO(), model.Item{
+			UserID:      item.UserID,
 			Title:       item.Title,
 			Seller:      item.Seller,
 			Price:       item.Price,

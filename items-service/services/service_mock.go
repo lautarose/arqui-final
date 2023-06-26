@@ -2,7 +2,7 @@ package services
 
 import (
 	"items/dtos"
-	e "items/utils/errors"
+	e "items/utils/errors/errors"
 )
 
 type ServiceMock struct{}
