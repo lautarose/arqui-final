@@ -11,6 +11,7 @@ func MapUrls(router *gin.Engine, dependencies *Dependencies) {
 
 	router.GET("/items/:id", dependencies.ItemController.GetItemById)
 	router.POST("/items/load", dependencies.ItemController.InsertItems)
+	router.PUT("/items/update", dependencies.ItemController.UpdateItem)
 
 	fmt.Println("Finishing mappings configurations")
 }

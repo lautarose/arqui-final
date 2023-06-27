@@ -50,9 +50,29 @@ func (repo *RepositoryMemcached) InsertItems(ctx context.Context, items dtos.Ite
 			Key:   item.Id,
 			Value: bytes,
 		}); err != nil {
-			return dtos.ItemsDto{}, e.NewInternalServerApiError(fmt.Sprintf("error inserting book %s", item.Id), err)
+			return dtos.ItemsDto{}, e.NewInternalServerApiError(fmt.Sprintf("error inserting item %s", item.Id), err)
 		}
 	}
 
 	return items, nil
+}
+
+func (repo *RepositoryMemcached) UpdateItem(ctx context.Context, item dtos.ItemDto) (dtos.ItemDto, e.ApiError) {
+	bytes, err := json.Marshal(item)
+	if err != nil {
+		return dtos.ItemDto{}, e.NewBadRequestApiError(err.Error())
+	}
+
+	if err := repo.Client.Replace(&memcache.Item{
+		Key:   item.Id,
+		Value: bytes,
+	}); err != nil {
+		var items dtos.ItemsDto
+		items = append(items, item)
+		returnItems, err := repo.InsertItems(ctx, items)
+		item = returnItems[0]
+		return item, err
+	}
+
+	return item, nil
 }
