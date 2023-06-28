@@ -61,6 +61,17 @@
   .login-button:hover::after {
     transform: scale(1.4);
   }
- 
+  
+  .product-card {
+    background-color: #7bc084; /* Define el color de fondo para las tarjetas */
+    border-radius: 8px; /* Agrega esquinas redondeadas */
+    padding: 16px; /* Añade un espacio interno */
+  }
+  
+  .product-card img {
+    object-fit: cover; /* Ajusta la imagen dentro de la tarjeta */
+    border-radius: 8px; /* Agrega esquinas redondeadas a la imagen */
+  }
+  
    
   
