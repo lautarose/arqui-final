@@ -60,7 +60,7 @@ func (serv *ServiceImpl) GetItemById(ctx context.Context, id string) (dtos.ItemD
 				if apiErr.Status() != http.StatusNotFound {
 					return dtos.ItemDto{}, apiErr
 				} else {
-					fmt.Println(fmt.Sprintf("Not found item %s in any datasource", id))
+					fmt.Printf("Not found item %s in any datasource\n", id)
 					apiErr = e.NewNotFoundApiError(fmt.Sprintf("item %s not found", id))
 					return dtos.ItemDto{}, apiErr
 				}
@@ -68,10 +68,10 @@ func (serv *ServiceImpl) GetItemById(ctx context.Context, id string) (dtos.ItemD
 				source = "db"
 				defer func() {
 					if _, apiErr := serv.distCache.InsertItems(ctx, items); apiErr != nil {
-						fmt.Println(fmt.Sprintf("Error trying to save item in distCache %v", apiErr))
+						fmt.Printf("Error trying to save item in distCache %v\n", apiErr)
 					}
 					if _, apiErr := serv.localCache.InsertItems(ctx, items); apiErr != nil {
-						fmt.Println(fmt.Sprintf("Error trying to save item in localCache %v", apiErr))
+						fmt.Printf("Error trying to save item in localCache %v\n", apiErr)
 					}
 				}()
 			}
@@ -79,7 +79,7 @@ func (serv *ServiceImpl) GetItemById(ctx context.Context, id string) (dtos.ItemD
 			source = "distCache"
 			defer func() {
 				if _, apiErr := serv.localCache.InsertItems(ctx, items); apiErr != nil {
-					fmt.Println(fmt.Sprintf("Error trying to save item in localCache %v", apiErr))
+					fmt.Printf("Error trying to save item in localCache %v\n", apiErr)
 				}
 			}()
 		}
@@ -87,42 +87,74 @@ func (serv *ServiceImpl) GetItemById(ctx context.Context, id string) (dtos.ItemD
 		source = "localCache"
 	}
 
-	fmt.Println(fmt.Sprintf("Obtained item from %s!", source))
+	fmt.Printf("Obtained item from %s!\n", source)
 	return item, nil
 }
 
 func (serv *ServiceImpl) InsertItems(ctx context.Context, items dtos.ItemsDto) (dtos.ItemsDto, e.ApiError) {
 	results, apiErr := serv.db.InsertItems(ctx, items)
 	if apiErr != nil {
-		fmt.Println(fmt.Sprintf("Error inserting item in db: %v", apiErr))
+		fmt.Printf("Error inserting item in db: %v\n", apiErr)
 		return dtos.ItemsDto{}, apiErr
 	}
-	fmt.Println(fmt.Sprintf("Inserted item in db: %v", results))
+	fmt.Printf("Inserted item in db: %v\n", results)
 
 	_, apiErr = serv.distCache.InsertItems(ctx, results)
 	if apiErr != nil {
-		fmt.Println(fmt.Sprintf("Error inserting item in distCache: %v", apiErr))
+		fmt.Printf("Error inserting item in distCache: %v\n", apiErr)
 		return results, nil
 	}
-	fmt.Println(fmt.Sprintf("Inserted item in distCache: %v", results))
+	fmt.Printf("Inserted item in distCache: %v\n", results)
 
 	_, apiErr = serv.localCache.InsertItems(ctx, results)
 	if apiErr != nil {
-		fmt.Println(fmt.Sprintf("Error inserting item in localCache: %v", apiErr))
+		fmt.Printf("Error inserting item in localCache: %v\n", apiErr)
 		return results, nil
 	}
-	fmt.Println(fmt.Sprintf("Inserted item in localCache: %v", results))
+	fmt.Printf("Inserted item in localCache: %v\n", results)
 
 	for _, item := range results {
-		if err := serv.queue.Publish(ctx, item); err != nil {
+		if err := serv.queue.PublishInsert(ctx, item); err != nil {
 			return results, e.NewInternalServerApiError(fmt.Sprintf("Error publishing item %s", item.Id), err)
 		}
-		fmt.Println(fmt.Sprintf("Message sent: %v", item.Id))
+		fmt.Printf("Message sent: %v\n", item.Id)
 
 		go downloadImage(item.Picture, item.Id, "/home")
 	}
 
 	return results, nil
+}
+
+func (serv *ServiceImpl) UpdateItem(ctx context.Context, item dtos.ItemDto) (dtos.ItemDto, e.ApiError) {
+	result, apiErr := serv.db.UpdateItem(ctx, item)
+	if apiErr != nil {
+		fmt.Printf("Error updating item in db: %v\n", apiErr)
+		return dtos.ItemDto{}, apiErr
+	}
+	fmt.Printf("Updated item in db: %v\n", result)
+
+	_, apiErr = serv.distCache.UpdateItem(ctx, result)
+	if apiErr != nil {
+		fmt.Printf("Error updating item in distCache: %v\n", apiErr)
+		return result, nil
+	}
+	fmt.Printf("updated item in distCache: %v\n", result)
+
+	_, apiErr = serv.localCache.UpdateItem(ctx, result)
+	if apiErr != nil {
+		fmt.Printf("Error updating item in localCache: %v\n", apiErr)
+		return result, nil
+	}
+	fmt.Printf("updated item in localCache: %v\n", result)
+
+	if err := serv.queue.PublishUpdate(ctx, item); err != nil {
+		return result, e.NewInternalServerApiError(fmt.Sprintf("Error publishing item %s", item.Id), err)
+	}
+	fmt.Printf("Message sent: %v\n", item.Id)
+
+	go downloadImage(item.Picture, item.Id, "/home")
+
+	return result, nil
 }
 
 func downloadImage(url, name, folder string) error {

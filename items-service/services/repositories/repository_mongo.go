@@ -33,7 +33,7 @@ func NewMongoDB(host string, port int, collection string) *RepositoryMongoDB {
 	}
 
 	fmt.Println("[MongoDB] Initialized connection")
-	fmt.Println(fmt.Sprintf("[MongoDB] Available databases: %s", names))
+	fmt.Printf("[MongoDB] Available databases: %s\n", names)
 
 	return &RepositoryMongoDB{
 		Client:     client,
@@ -92,10 +92,66 @@ func (repo *RepositoryMongoDB) InsertItems(ctx context.Context, items dtos.Items
 		if err != nil {
 			return dtos.ItemsDto{}, e.NewInternalServerApiError(fmt.Sprintf("error inserting item %s", item.Id), err)
 		}
-		item.Id = fmt.Sprintf(result.InsertedID.(primitive.ObjectID).Hex())
+		item.Id = result.InsertedID.(primitive.ObjectID).Hex()
 
 		itemsResponse = append(itemsResponse, item)
 	}
 
 	return itemsResponse, nil
+}
+
+func (repo *RepositoryMongoDB) UpdateItem(ctx context.Context, item dtos.ItemDto) (dtos.ItemDto, e.ApiError) {
+	objectID, err := primitive.ObjectIDFromHex(item.Id)
+	if err != nil {
+		return dtos.ItemDto{}, e.NewBadRequestApiError("error updating item: invalid ID")
+	}
+
+	update := bson.M{
+		"$set": bson.M{
+			"userID":      item.UserID,
+			"title":       item.Title,
+			"seller":      item.Seller,
+			"price":       item.Price,
+			"currency":    item.Currency,
+			"picture":     item.Picture,
+			"description": item.Description,
+			"state":       item.State,
+			"city":        item.City,
+			"street":      item.Street,
+			"number":      item.Number,
+		},
+	}
+
+	filter := bson.M{"_id": objectID}
+
+	result, err := repo.Database.Collection(repo.Collection).UpdateOne(ctx, filter, update)
+	if err != nil {
+		return dtos.ItemDto{}, e.NewInternalServerApiError(fmt.Sprintf("error updating item: %s", err.Error()), err)
+	}
+
+	if result.MatchedCount == 0 {
+		return dtos.ItemDto{}, e.NewNotFoundApiError(fmt.Sprintf("item not found: %s", item.Id))
+	}
+
+	return item, nil
+}
+
+func (repo *RepositoryMongoDB) DeleteItem(ctx context.Context, id string) (string, e.ApiError) {
+	responseId := ""
+	objectID, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return responseId, e.NewBadRequestApiError(fmt.Sprintf("error deleting item %s: invalid id", id))
+	}
+
+	result, err := repo.Database.Collection(repo.Collection).DeleteOne(ctx, bson.M{"_id": objectID})
+	if err != nil {
+		return responseId, e.NewInternalServerApiError(fmt.Sprintf("error deleting item %s", id), err)
+	}
+
+	if result.DeletedCount == 0 {
+		return responseId, e.NewNotFoundApiError(fmt.Sprintf("item %s not found", id))
+	}
+
+	responseId = id
+	return responseId, nil
 }

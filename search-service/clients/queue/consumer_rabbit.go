@@ -18,7 +18,7 @@ func Consume() error {
 		return err
 	}
 
-	queues := []string{"item-insert-queue", "item-modification-queue", "item-deletion-queue"}
+	queues := []string{"item-insert-queue", "item-update-queue", "item-delete-queue"}
 
 	for _, queue := range queues {
 		q, err := ch.QueueDeclare(
@@ -60,10 +60,10 @@ func consumeMessages(queue string, msgs <-chan amqp.Delivery) {
 		switch queue {
 		case "item-insert-queue":
 			handleInsertMessage(d.Body)
-		case "item-modification-queue":
-			handleModificationMessage(d.Body)
-		case "item-deletion-queue":
-			handleDeletionMessage(d.Body)
+		case "item-update-queue":
+			handleUpdateMessage(d.Body)
+		case "item-delete-queue":
+			handleDeleteMessage(d.Body)
 		}
 	}
 }
@@ -84,12 +84,12 @@ func handleInsertMessage(body []byte) {
 	}
 }
 
-func handleModificationMessage(body []byte) {
+func handleUpdateMessage(body []byte) {
 	// Handle modification message logic here
 	log.Println("Received a modification message:", string(body))
 }
 
-func handleDeletionMessage(body []byte) {
+func handleDeleteMessage(body []byte) {
 	// Handle deletion message logic here
 	log.Println("Received a deletion message:", string(body))
 }

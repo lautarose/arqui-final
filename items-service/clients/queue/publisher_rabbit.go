@@ -35,7 +35,7 @@ func NewRabbitmq(host string, port int) *RabbitMQ {
 	}
 }
 
-func (queue RabbitMQ) Publish(ctx context.Context, item dtos.ItemDto) error {
+func (queue RabbitMQ) PublishInsert(ctx context.Context, item dtos.ItemDto) error {
 	q, err := queue.Channel.QueueDeclare(
 		"item-insert-queue", // name
 		false,               // durable
@@ -67,7 +67,81 @@ func (queue RabbitMQ) Publish(ctx context.Context, item dtos.ItemDto) error {
 		return err
 	}
 
-	log.Printf(" [RabbitMQ] Sent %s", body)
+	log.Printf(" [RabbitMQ] Sent %s item-insert-queue", body)
+
+	return nil
+}
+
+func (queue RabbitMQ) PublishDelete(ctx context.Context, item dtos.ItemDto) error {
+	q, err := queue.Channel.QueueDeclare(
+		"item-delete-queue", // name
+		false,               // durable
+		false,               // delete when unused
+		false,               // exclusive
+		false,               // no-wait
+		nil,                 // arguments
+	)
+	if err != nil {
+		return err
+	}
+
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	body := item.Id
+	err = queue.Channel.PublishWithContext(ctx,
+		"",     // exchange
+		q.Name, // routing key
+		false,  // mandatory
+		false,  // inmediate
+		amqp.Publishing{
+			DeliveryMode: amqp.Persistent,
+			ContentType:  "text/plain",
+			Body:         []byte(body),
+		}, //message
+	)
+	if err != nil {
+		return err
+	}
+
+	log.Printf(" [RabbitMQ] Sent %s from item-delete-queue", body)
+
+	return nil
+}
+
+func (queue RabbitMQ) PublishUpdate(ctx context.Context, item dtos.ItemDto) error {
+	q, err := queue.Channel.QueueDeclare(
+		"item-update-queue", // name
+		false,               // durable
+		false,               // delete when unused
+		false,               // exclusive
+		false,               // no-wait
+		nil,                 // arguments
+	)
+	if err != nil {
+		return err
+	}
+
+	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	body := item.Id
+	err = queue.Channel.PublishWithContext(ctx,
+		"",     // exchange
+		q.Name, // routing key
+		false,  // mandatory
+		false,  // inmediate
+		amqp.Publishing{
+			DeliveryMode: amqp.Persistent,
+			ContentType:  "text/plain",
+			Body:         []byte(body),
+		}, //message
+	)
+	if err != nil {
+		return err
+	}
+
+	log.Printf(" [RabbitMQ] Sent %s from item-update-queue", body)
 
 	return nil
 }

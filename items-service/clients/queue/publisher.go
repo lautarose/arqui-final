@@ -6,5 +6,7 @@ import (
 )
 
 type Publisher interface {
-	Publish(ctx context.Context, item dtos.ItemDto) error
+	PublishInsert(ctx context.Context, item dtos.ItemDto) error
+	PublishDelete(ctx context.Context, item dtos.ItemDto) error
+	PublishUpdate(ctx context.Context, item dtos.ItemDto) error
 }

@@ -42,3 +42,18 @@ func (repo *RepositoryCCache) InsertItems(ctx context.Context, items dtos.ItemsD
 
 	return items, nil
 }
+
+func (repo *RepositoryCCache) UpdateItem(ctx context.Context, item dtos.ItemDto) (dtos.ItemDto, e.ApiError) {
+	existingItem := repo.Client.Get(item.Id)
+	if existingItem == nil {
+		var items dtos.ItemsDto
+		items = append(items, item)
+		returnItems, err := repo.InsertItems(ctx, items)
+		item = returnItems[0]
+		return item, err
+	}
+
+	repo.Client.Set(item.Id, item, repo.DefaultTTL)
+
+	return item, nil
+}
