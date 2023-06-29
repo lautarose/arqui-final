@@ -2,7 +2,7 @@ package clients
 
 import (
 	"encoding/json"
-	io "io/ioutil"
+	io "io"
 	"log"
 	"net/http"
 	dtos "search/dtos"
@@ -29,7 +29,7 @@ func GetItemsByQuery(query string) (dtos.ItemsDto, error) {
 		return dtos.ItemsDto{}, err
 	}
 
-	bodyDto, err := ParseBody(bytes)
+	bodyDto, err := ParseBodyInsert(bytes)
 
 	if err != nil {
 		log.Println(err)
@@ -60,7 +60,7 @@ func GetItemsByQuery(query string) (dtos.ItemsDto, error) {
 	return items, nil
 }
 
-func ParseBody(bytes []byte) (dtos.BodyDto, error) {
+func ParseBodyInsert(bytes []byte) (dtos.BodyDto, error) {
 	var body dtos.BodyDto
 	if err := json.Unmarshal(bytes, &body); err != nil {
 		log.Fatal(err)

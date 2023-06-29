@@ -1,8 +1,13 @@
 package clients
 
 import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+	"io"
 	"log"
 	"net/http"
+	dtos "search/dtos"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -85,13 +90,38 @@ func handleInsertMessage(body []byte) {
 }
 
 func handleUpdateMessage(body []byte) {
-	// Handle modification message logic here
-	log.Println("Received an update message:", string(body))
+	r, err := getItem(string(body))
+	if err != nil {
+		log.Println("Cannot get item:", err)
+		return
+	}
+
+	res, err := updateItem(r)
+	if err != nil {
+		log.Println("Cannot update item:", err)
+		log.Println(res.Body)
+	} else {
+		log.Println("Item updated:", res.Body)
+	}
+
+	fmt.Println("handle update message")
 }
 
 func handleDeleteMessage(body []byte) {
-	// Handle deletion message logic here
-	log.Println("Received a delete message:", string(body))
+	/*r, err := getItem(string(body))
+	if err != nil {
+		log.Println("Cannot get item:", err)
+		return
+	}
+
+	res, err := deleteItem(r)
+	if err != nil {
+		log.Println("Cannot delete item:", err)
+		log.Println(res.Body)
+	} else {
+		log.Println("Item deleted:", res.Body)
+	}*/
+	fmt.Println("handle delete message")
 }
 
 func getItem(id string) (*http.Response, error) {
@@ -118,3 +148,92 @@ func insertItem(r *http.Response) (*http.Response, error) {
 
 	return r, nil
 }
+
+func updateItem(r *http.Response) (*http.Response, error) {
+	//leer el body de la response de getItem
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		fmt.Println("Error al leer el cuerpo de la respuesta:", err)
+		return nil, err
+	}
+
+	// Decodificar el cuerpo de la respuesta en una estructura Item
+	var item dtos.ItemReponseDto //es un itemResponse por como response la api items
+	err = json.Unmarshal(body, &item)
+	if err != nil {
+		fmt.Println("Error al decodificar el cuerpo de la respuesta:", err)
+		return nil, err
+	}
+
+	//transformo en la estructura necesaria para solr
+	itemUpdateDto := dtos.ItemUpdateDto{
+		Id: item.Id,
+		Title: dtos.FieldValue{
+			Set: item.Title,
+		},
+		Seller: dtos.FieldValue{
+			Set: item.Seller,
+		},
+		Price: dtos.FieldValue{
+			Set: item.Price,
+		},
+		Currency: dtos.FieldValue{
+			Set: item.Currency,
+		},
+		Picture: dtos.FieldValue{
+			Set: item.Picture,
+		},
+		Description: dtos.FieldValue{
+			Set: item.Description,
+		},
+		State: dtos.FieldValue{
+			Set: item.State,
+		},
+		City: dtos.FieldValue{
+			Set: item.City,
+		},
+		Street: dtos.FieldValue{
+			Set: item.Street,
+		},
+		Number: dtos.FieldValue{
+			Set: item.Number,
+		},
+	}
+
+	//solr me pide que sea un slice.
+	var itemsToUpdate dtos.ItemsUpdateDto
+
+	itemsToUpdate = append(itemsToUpdate, itemUpdateDto)
+
+	// Codificar el DTO ItemUpdateDto en JSON
+	dtoJSON, err := json.Marshal(itemsToUpdate)
+	if err != nil {
+		fmt.Println("Error al codificar el DTO en JSON:", err)
+		return nil, err
+	}
+
+	// transformarlo en un objeto reader
+	dtoReader := bytes.NewReader(dtoJSON)
+
+	r, err = http.Post("http://solr:8983/solr/items/update?commit=true", "application/json", dtoReader)
+
+	if err != nil {
+		log.Println(err)
+		return r, err
+	}
+
+	return r, nil
+}
+
+/*func deleteItem(r *http.Response) (*http.Response, error) {
+	body := r.Body
+
+	// Perform the delete logic here
+
+	if err != nil {
+		log.Println(err)
+		return r, err
+	}
+
+	return r, nil
+}*/
