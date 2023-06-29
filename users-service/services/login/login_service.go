@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 
-	userCliente "user/clients"
+	userCliente "user/clients/user"
 	loginDto "user/dtos/login"
 	jwtUtils "user/utils/jwt"
 

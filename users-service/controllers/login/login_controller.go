@@ -27,9 +27,9 @@ func Login(c *gin.Context) {
 	// Error del Insert
 
 	if err2 != nil {
-		c.JSON(http.StatusBadRequest, loginRespDto)
+		c.JSON(http.StatusForbidden, loginRespDto)
 		return
 	}
 
-	c.JSON(http.StatusCreated, loginRespDto)
+	c.JSON(http.StatusAccepted, loginRespDto)
 }

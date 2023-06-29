@@ -1,7 +1,7 @@
 package database
 
 import (
-	userClient "user/clients"
+	userClient "user/clients/user"
 	userModel "user/models"
 
 	data "user/database/data"
