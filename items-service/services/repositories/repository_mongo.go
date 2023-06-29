@@ -136,22 +136,19 @@ func (repo *RepositoryMongoDB) UpdateItem(ctx context.Context, item dtos.ItemDto
 	return item, nil
 }
 
-func (repo *RepositoryMongoDB) DeleteItem(ctx context.Context, id string) (string, e.ApiError) {
-	responseId := ""
+func (repo *RepositoryMongoDB) DeleteItem(ctx context.Context, id string) e.ApiError {
 	objectID, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
-		return responseId, e.NewBadRequestApiError(fmt.Sprintf("error deleting item %s: invalid id", id))
+		return e.NewBadRequestApiError(fmt.Sprintf("error deleting item %s: invalid id", id))
 	}
 
 	result, err := repo.Database.Collection(repo.Collection).DeleteOne(ctx, bson.M{"_id": objectID})
 	if err != nil {
-		return responseId, e.NewInternalServerApiError(fmt.Sprintf("error deleting item %s", id), err)
+		return e.NewInternalServerApiError(fmt.Sprintf("error deleting item %s", id), err)
 	}
 
 	if result.DeletedCount == 0 {
-		return responseId, e.NewNotFoundApiError(fmt.Sprintf("item %s not found", id))
+		return e.NewNotFoundApiError(fmt.Sprintf("item %s not found", id))
 	}
-
-	responseId = id
-	return responseId, nil
+	return nil
 }

@@ -76,3 +76,15 @@ func (repo *RepositoryMemcached) UpdateItem(ctx context.Context, item dtos.ItemD
 
 	return item, nil
 }
+
+func (repo *RepositoryMemcached) DeleteItem(ctx context.Context, id string) e.ApiError {
+	err := repo.Client.Delete(id)
+	if err != nil {
+		if err == memcache.ErrCacheMiss {
+			return e.NewNotFoundApiError(fmt.Sprintf("item %s not found", id))
+		}
+		return e.NewInternalServerApiError(fmt.Sprintf("error deleting item %s", id), err)
+	}
+
+	return nil
+}

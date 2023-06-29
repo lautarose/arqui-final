@@ -57,3 +57,8 @@ func (repo *RepositoryCCache) UpdateItem(ctx context.Context, item dtos.ItemDto)
 
 	return item, nil
 }
+
+func (repo *RepositoryCCache) DeleteItem(ctx context.Context, id string) e.ApiError {
+	repo.Client.Delete(id)
+	return nil
+}

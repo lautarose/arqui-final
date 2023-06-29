@@ -72,7 +72,7 @@ func (queue RabbitMQ) PublishInsert(ctx context.Context, item dtos.ItemDto) erro
 	return nil
 }
 
-func (queue RabbitMQ) PublishDelete(ctx context.Context, item dtos.ItemDto) error {
+func (queue RabbitMQ) PublishDelete(ctx context.Context, id string) error {
 	q, err := queue.Channel.QueueDeclare(
 		"item-delete-queue", // name
 		false,               // durable
@@ -88,7 +88,7 @@ func (queue RabbitMQ) PublishDelete(ctx context.Context, item dtos.ItemDto) erro
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
-	body := item.Id
+	body := id
 	err = queue.Channel.PublishWithContext(ctx,
 		"",     // exchange
 		q.Name, // routing key

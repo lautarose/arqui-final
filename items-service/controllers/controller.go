@@ -127,3 +127,53 @@ func (ctrl *Controller) UpdateItem(c *gin.Context) {
 	// Devolver el ítem actualizado en formato JSON
 	c.JSON(http.StatusOK, updatedItem)
 }
+
+func (ctrl *Controller) DeleteItem(c *gin.Context) {
+	auth := c.GetHeader("Authorization")
+
+	if auth == "" {
+		c.JSON(http.StatusForbidden, nil)
+		return
+	}
+
+	claims, err := jwt.VerifyToken(auth)
+
+	if err != nil {
+		apiErr := e.NewForbiddenApiError(err.Error())
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+
+	userId, err := strconv.Atoi(claims.Id)
+
+	if err != nil {
+		apiErr := e.NewInternalServerApiError("cannot convert claim", err)
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+
+	// Obtener el ítem original de la base de datos
+	originalItem, apiErr := ctrl.service.GetItemById(c.Request.Context(), c.Param("id"))
+
+	if apiErr != nil {
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+
+	// Verificar si el userID del token coincide con el userID del ítem
+	if userId != originalItem.UserID {
+		apiErr := e.NewForbiddenApiError("No tienes permiso para modificar este ítem")
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+
+	// Llamar al servicio para eliminar el ítem
+	apiErr = ctrl.service.DeleteItem(c.Request.Context(), c.Param("id"))
+	if apiErr != nil {
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+
+	// Devolver el ítem actualizado en formato JSON
+	c.JSON(http.StatusOK, nil)
+}

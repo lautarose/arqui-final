@@ -157,6 +157,36 @@ func (serv *ServiceImpl) UpdateItem(ctx context.Context, item dtos.ItemDto) (dto
 	return result, nil
 }
 
+func (serv *ServiceImpl) DeleteItem(ctx context.Context, id string) e.ApiError {
+	apiErr := serv.db.DeleteItem(ctx, id)
+	if apiErr != nil {
+		fmt.Printf("Error deleting item from db: %v\n", apiErr)
+		return apiErr
+	}
+	fmt.Printf("Deleted item from db: %s\n", id)
+
+	apiErr = serv.distCache.DeleteItem(ctx, id)
+	if apiErr != nil {
+		fmt.Printf("Error deleting item from distCache: %v\n", apiErr)
+		return apiErr
+	}
+	fmt.Printf("Deleted item from distCache: %s\n", id)
+
+	apiErr = serv.localCache.DeleteItem(ctx, id)
+	if apiErr != nil {
+		fmt.Printf("Error deleting item from localCache: %v\n", apiErr)
+		return apiErr
+	}
+	fmt.Printf("Deleted item from localCache: %s\n", id)
+
+	if err := serv.queue.PublishDelete(ctx, id); err != nil {
+		return e.NewInternalServerApiError(fmt.Sprintf("Error publishing item deletion %s", id), err)
+	}
+	fmt.Printf("Message sent for item deletion: %s\n", id)
+
+	return nil
+}
+
 func downloadImage(url, name, folder string) error {
 	// Crear la ruta completa de la imagen
 

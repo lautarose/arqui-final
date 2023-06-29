@@ -86,12 +86,12 @@ func handleInsertMessage(body []byte) {
 
 func handleUpdateMessage(body []byte) {
 	// Handle modification message logic here
-	log.Println("Received a modification message:", string(body))
+	log.Println("Received an update message:", string(body))
 }
 
 func handleDeleteMessage(body []byte) {
 	// Handle deletion message logic here
-	log.Println("Received a deletion message:", string(body))
+	log.Println("Received a delete message:", string(body))
 }
 
 func getItem(id string) (*http.Response, error) {
