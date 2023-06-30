@@ -7,4 +7,5 @@ import (
 
 type Service interface {
 	GetItemsByQuery(query string) (dtos.ItemsDto, e.ApiError)
+	GetItems() (dtos.ItemsDto, e.ApiError)
 }

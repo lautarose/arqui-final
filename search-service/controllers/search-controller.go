@@ -25,3 +25,12 @@ func (ctrl *Controller) GetItemsByQuery(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, item)
 }
+
+func (ctrl *Controller) GetItems(c *gin.Context) {
+	item, apiErr := ctrl.service.GetItems()
+	if apiErr != nil {
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+	c.JSON(http.StatusOK, item)
+}
