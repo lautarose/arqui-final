@@ -1,5 +1,5 @@
 // Crear los 4 usuarios con valores específicos
-var usuarios = [
+export const users = [
     {
       name: "Lautaro",
       lastName: "Saenz",
