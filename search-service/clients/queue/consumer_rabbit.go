@@ -108,19 +108,16 @@ func handleUpdateMessage(body []byte) {
 }
 
 func handleDeleteMessage(body []byte) {
-	/*r, err := getItem(string(body))
-	if err != nil {
-		log.Println("Cannot get item:", err)
-		return
-	}
+	id := string(body)
 
-	res, err := deleteItem(r)
+	res, err := deleteItem(id)
+
 	if err != nil {
 		log.Println("Cannot delete item:", err)
 		log.Println(res.Body)
 	} else {
 		log.Println("Item deleted:", res.Body)
-	}*/
+	}
 	fmt.Println("handle delete message")
 }
 
@@ -225,10 +222,31 @@ func updateItem(r *http.Response) (*http.Response, error) {
 	return r, nil
 }
 
-/*func deleteItem(r *http.Response) (*http.Response, error) {
-	body := r.Body
+func deleteItem(id string) (*http.Response, error) {
 
 	// Perform the delete logic here
+
+	requestBody := struct {
+		Delete struct {
+			ID string `json:"id"`
+		} `json:"delete"`
+	}{
+		Delete: struct {
+			ID string `json:"id"`
+		}{
+			ID: id,
+		},
+	}
+
+	// Codificar el objeto JSON en bytes
+	requestBodyJSON, err := json.Marshal(requestBody)
+	if err != nil {
+		return nil, fmt.Errorf("error al codificar el cuerpo de la solicitud: %v", err)
+	}
+
+	requestBodyReader := bytes.NewReader(requestBodyJSON)
+
+	r, err := http.Post("http://solr:8983/solr/items/update?commit=true", "application/json", requestBodyReader)
 
 	if err != nil {
 		log.Println(err)
@@ -236,4 +254,4 @@ func updateItem(r *http.Response) (*http.Response, error) {
 	}
 
 	return r, nil
-}*/
+}
