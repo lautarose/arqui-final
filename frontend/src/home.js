@@ -13,26 +13,34 @@ function truncateDescription(description, limit) {
 }
 
 const Home = () => {
-  const url = "http://localhost:8090/items/649f455e7551ab4d8b84bee9";
+  const url = "http://localhost:8090/items/649f4ffd766a191ba2a3ece4";
   
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState({});
 
   const fetchApi = async () => {
-    const response = await fetch(url);
-    const responseJSON = await response.json();
-    setProducts(responseJSON);
-  }
+    try {
+      const response = await fetch(url);
+      const responseJSON = await response.json();
+      setProducts(responseJSON);
+    } catch (error) {
+      console.error('Error fetching products:', error);
+    }
+  };
+  
 
   useEffect(() => {
     fetchApi();
   }, []);
 
-  
-
-  return (
-    <div className='container'>
-   hola
-    </div>
+  return ( 
+      <div className='container'>
+        <Typography variant="h5" component="div">
+          {products.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Price: {products.price}
+        </Typography>
+      </div>
   );
 };
 
