@@ -155,7 +155,10 @@ func (s *userService) DeleteUser(authToken string) (userDtos.UsersResponseDto, e
 	userDto.UserName = user.UserName
 
 	// Publicar el mensaje en la cola de mensajes
-	err = MessagePublisher.Publish(context.Background(), id)
+	var msg userDtos.UserMessageDto
+	msg.Id = userDto.Id
+	msg.Token = authToken
+	err = MessagePublisher.Publish(context.Background(), msg)
 	if err != nil {
 		return userDto, err
 	}

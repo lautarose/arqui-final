@@ -1,7 +1,13 @@
 package queue
 
 import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"items/dtos"
 	"log"
+	"net/http"
+	"strconv"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -58,22 +64,53 @@ func consumeMessages(queue string, msgs <-chan amqp.Delivery) {
 
 func handleDeleteMessage(body []byte) {
 
-	/*id := string(body)
+	//parse body
+	var requestBody dtos.UserMessageDto
+	err := json.Unmarshal(body, &requestBody)
+	if err != nil {
+		log.Println("Error parsing request body:", err)
+		return
+	}
 
-	res, err := getItems(id)
+	id := requestBody.Id
+	token := requestBody.Token
 
+	newId := strconv.Itoa(id)
 
+	res, err := getItems(newId)
 
 	if err != nil {
-		log.Println("Cannot delete item:", err)
+		log.Println("Cannot get items:", err)
 		log.Println(res.Body)
 	} else {
-		log.Println("Item deleted:", res.Body)
+		defer res.Body.Close()
+
+		// Read the response body
+		responseBody, err := io.ReadAll(res.Body)
+		if err != nil {
+			log.Println("Error reading response body:", err)
+			return
+		}
+
+		// Convert responseBody to a slice of strings
+		var items []string
+		err = json.Unmarshal(responseBody, &items)
+		if err != nil {
+			log.Println("Error parsing response:", err)
+			return
+		}
+
+		for _, item := range items {
+			_, err := deleteItem(item, token)
+			if err != nil {
+				log.Println("Error deleting item: ", item, " error: ", err)
+			}
+		}
 	}
-	fmt.Println("handle delete message")*/
+
 }
 
-/*func getItems(id string) (*http.Response, error) {
+func getItems(id string) (*http.Response, error) {
 	url := "http://items-service:8090/items/user/" + id
 	r, err := http.Get(url)
 
@@ -85,25 +122,35 @@ func handleDeleteMessage(body []byte) {
 	return r, nil
 }
 
-func insertItem(r *http.Response) (*http.Response, error) {
-	body := r.Body
+func deleteItem(item string, token string) (*http.Response, error) {
 
-	r, err := http.Post("http://solr:8983/solr/items/update/json/docs?commit=true", "application/json", body)
+	// URL de la solicitud DELETE
+	url := fmt.Sprintf("http://localhost:8090/items/%s", item)
 
+	// Crear la solicitud DELETE
+	req, err := http.NewRequest("DELETE", url, nil)
 	if err != nil {
-		log.Println(err)
-		return r, err
+		fmt.Println("Error al crear la solicitud DELETE:", err)
+		return nil, err
 	}
 
-	return r, nil
+	// Agregar el token JWT al encabezado de autorización
+	req.Header.Set("Authorization", token)
+
+	// Realizar la solicitud HTTP DELETE
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error al realizar la solicitud DELETE:", err)
+		return resp, err
+	}
+	defer resp.Body.Close()
+
+	// Verificar el código de estado de la respuesta
+	if resp.StatusCode == http.StatusOK {
+		fmt.Println("Elemento eliminado exitosamente")
+	} else {
+		fmt.Println("Error al eliminar el elemento. Código de estado:", resp.StatusCode)
+	}
+	return resp, nil
 }
-
-func deleteItem(id string) (*http.Response, error) {
-
-	// Perform the delete logic here
-
-
-
-	return r, nil
-}
-*/

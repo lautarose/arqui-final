@@ -1,12 +1,14 @@
 package queue
 
 import (
+	"encoding/json"
 	"strconv"
 
 	"context"
 	"fmt"
 	"log"
 	"time"
+	dto "user/dtos/user"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -34,7 +36,7 @@ func NewRabbitmq(host string, port int) *RabbitMQ {
 	}
 }
 
-func (queue RabbitMQ) Publish(ctx context.Context, id int) error {
+func (queue RabbitMQ) Publish(ctx context.Context, msg dto.UserMessageDto) error {
 	q, err := queue.Channel.QueueDeclare(
 		"users-delete-queue", // name
 		false,                // durable
@@ -50,7 +52,13 @@ func (queue RabbitMQ) Publish(ctx context.Context, id int) error {
 	ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 	defer cancel()
 
-	body := strconv.Itoa(id)
+	body := msg
+
+	bodyBytes, err := json.Marshal(body)
+	if err != nil {
+		return err
+	}
+
 	err = queue.Channel.PublishWithContext(ctx,
 		"",     // exchange
 		q.Name, // routing key
@@ -59,14 +67,16 @@ func (queue RabbitMQ) Publish(ctx context.Context, id int) error {
 		amqp.Publishing{
 			DeliveryMode: amqp.Persistent,
 			ContentType:  "text/plain",
-			Body:         []byte(body),
+			Body:         []byte(bodyBytes),
 		}, //message
 	)
 	if err != nil {
 		return err
 	}
 
-	log.Printf(" [RabbitMQ] Sent %s user-delete-queue", body)
+	b := strconv.Itoa(body.Id)
+
+	log.Printf(" [RabbitMQ] Sent %s user-delete-queue", b)
 
 	return nil
 }
