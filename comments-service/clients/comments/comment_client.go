@@ -68,7 +68,7 @@ func InsertComment(newComment model.Comment) (model.Comment, error) {
 func DeleteComment(commentId int) (model.Comment, error) {
 	var comment model.Comment
 
-	// Buscar el usuario por su ID
+	// Buscar el comentario por su ID
 	err := Db.Where("comment_id = ?", commentId).First(&comment).Error
 	if err != nil {
 		log.Println(err)

@@ -54,7 +54,7 @@ func GetComments(c *gin.Context) {
 	c.JSON(http.StatusOK, commentsDto)
 }
 
-/*func DeleteUser(c *gin.Context) {
+func DeleteComment(c *gin.Context) {
 	auth := c.GetHeader("Authorization")
 
 	if auth == "" {
@@ -62,7 +62,7 @@ func GetComments(c *gin.Context) {
 		return
 	}
 
-	userDto, err := service.UserService.DeleteUser(auth)
+	userDto, err := service.CommentService.DeleteComment(auth, c.Param("id"))
 
 	if err != nil {
 		c.JSON(http.StatusForbidden, nil)
@@ -70,4 +70,4 @@ func GetComments(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, userDto)
-}*/
+}

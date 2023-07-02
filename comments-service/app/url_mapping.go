@@ -10,5 +10,5 @@ func MapUrls() {
 	// Comments Mapping
 	router.GET("/comments/:id", commentsController.GetComments)
 	router.POST("/comments/load", commentsController.InsertComment)
-	//router.DELETE("/comments/:id")
+	router.DELETE("/comments/:id", commentsController.DeleteComment)
 }
