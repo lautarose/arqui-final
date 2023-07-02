@@ -1,9 +1,10 @@
 package services
 
 import (
+	"context"
 	"strconv"
+	"user/clients/queue"
 	userCliente "user/clients/user"
-
 	userDtos "user/dtos/user"
 	userModel "user/models"
 	jwtUtils "user/utils/jwt"
@@ -19,11 +20,13 @@ type userServiceInterface interface {
 }
 
 var (
-	UserService userServiceInterface
+	UserService      userServiceInterface
+	MessagePublisher queue.Publisher
 )
 
 func init() {
 	UserService = &userService{}
+	MessagePublisher = queue.NewRabbitmq("rabbit", 5672)
 }
 
 func (s *userService) InsertUser(newUser userDtos.UserInsertDto) (userDtos.UserInsertDto, error) {
@@ -150,6 +153,12 @@ func (s *userService) DeleteUser(authToken string) (userDtos.UsersResponseDto, e
 	userDto.LastName = user.LastName
 	userDto.Name = user.Name
 	userDto.UserName = user.UserName
+
+	// Publicar el mensaje en la cola de mensajes
+	err = MessagePublisher.Publish(context.Background(), id)
+	if err != nil {
+		return userDto, err
+	}
 
 	return userDto, nil
 }
