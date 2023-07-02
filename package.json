@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "sweetalert2": "^11.7.12",
-    "universal-cookie": "^4.0.4"
-  }
-}
