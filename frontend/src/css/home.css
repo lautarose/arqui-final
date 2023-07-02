@@ -1,44 +1,44 @@
+
 .container {
     position: relative;
     height: 100vh;
 }
+/* Estilo para el botón de login */
 .login-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 10px 20px;
-  background-color: #001f3f; /* Color de fondo azul oscuro */
-  color: #fff; /* Color del texto */
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Sombra azul neón */
-  z-index: 9999;
+  background-color: #002bff; /* Color de fondo azul */
+  color: #ffffff; /* Color de texto blanco */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  border-radius: 4px; /* Borde redondeado */
+  font-size: 16px; /* Tamaño de fuente */
+  cursor: pointer; /* Cursor de tipo puntero */
+  text-decoration: none; /* Sin decoración de texto */
+  display: inline-block; /* Mostrar como bloque en línea */
+  transition: background-color 0.3s; /* Transición suave del color de fondo */
+ 
 }
 
-.login-button:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: #00bfff; /* Color de fondo azul neón */
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: -1;
+.login-button:hover {
+  background-color: #00d4ff; /* Color de fondo azul neón al pasar el cursor */
 }
 
-.login-button:hover:before {
-  opacity: 1;
+/* Estilo para el botón de logout */
+.logout-button {
+  background-color: #002bff; /* Color de fondo azul */
+  color: #ffffff; /* Color de texto blanco */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  border-radius: 4px; /* Borde redondeado */
+  font-size: 16px; /* Tamaño de fuente */
+  cursor: pointer; /* Cursor de tipo puntero */
+  text-decoration: none; /* Sin decoración de texto */
+  display: inline-block; /* Mostrar como bloque en línea */
+  transition: background-color 0.3s; /* Transición suave del color de fondo */
+ 
 }
 
-.login-button:active {
-  background-color: #001f3f; /* Color de fondo azul oscuro al hacer clic */
-  box-shadow: 0 0 10px rgba(0, 162, 232, 0.5); /* Sombra azul neón al hacer clic */
+.logout-button:hover {
+  background-color: #00d4ff; /* Color de fondo azul neón al pasar el cursor */
 }
 
   .product-card {

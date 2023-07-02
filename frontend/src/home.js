@@ -3,6 +3,7 @@ import './css/home.css';
 import { Card, CardContent, CardMedia, Typography, Grid } from "@mui/material";
 import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
+import Navbar from './components/navbar';
 
 function truncateDescription(description, limit) {
   const words = description.split(" ");
@@ -13,9 +14,9 @@ function truncateDescription(description, limit) {
 }
 
 const Home = () => {
-  const url = "http://localhost:8090/items/649f4ffd766a191ba2a3ece4";
+  const url = "http://localhost:8080/search/";
   
-  const [products, setProducts] = useState({});
+  const [products, setProducts] = useState([]);
 
   const fetchApi = async () => {
     try {
@@ -27,21 +28,45 @@ const Home = () => {
     }
   };
   
-
   useEffect(() => {
     fetchApi();
   }, []);
 
   return ( 
-      <div className='container'>
-        <Typography variant="h5" component="div">
-          {products.title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Price: {products.price}
-        </Typography>
-      </div>
+    <div className='container'>
+       <Navbar />
+      <Grid container spacing={2}>
+        {products.map((product) => (
+          <Grid item xs={12} sm={6} md={4} key={product.id}>
+            <Card className='product-card'>
+              <CardMedia
+                component="img"
+                height="200"
+                image={product.picture[0]}
+                alt={product.title[0]}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {product.title[0]}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Price: {product.price[0]} {product.currency[0]}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {truncateDescription(product.description[0], 15)}
+                </Typography>
+              </CardContent>
+              <Link to={`/product/${product.id}`} className="product-link">
+                <SearchIcon />
+                View Details
+              </Link>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </div>
   );
 };
 
 export default Home;
+
