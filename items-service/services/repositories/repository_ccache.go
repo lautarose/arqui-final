@@ -62,3 +62,7 @@ func (repo *RepositoryCCache) DeleteItem(ctx context.Context, id string) e.ApiEr
 	repo.Client.Delete(id)
 	return nil
 }
+
+func (repo *RepositoryCCache) GetItemsIdByUserId(ctx context.Context, userId string) ([]string, e.ApiError) {
+	return nil, nil
+}

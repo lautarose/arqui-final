@@ -217,3 +217,12 @@ func downloadImage(url, name, folder string) error {
 	fmt.Printf("%s downloaded succesfully! \n", name)
 	return nil
 }
+
+func (serv *ServiceImpl) GetItemsIdByUserId(ctx context.Context, userId string) ([]string, e.ApiError) {
+	dbItems, apiErr := serv.db.GetItemsIdByUserId(ctx, userId)
+	if apiErr != nil {
+		return nil, apiErr
+	}
+
+	return dbItems, nil
+}

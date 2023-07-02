@@ -88,3 +88,7 @@ func (repo *RepositoryMemcached) DeleteItem(ctx context.Context, id string) e.Ap
 
 	return nil
 }
+
+func (repo *RepositoryMemcached) GetItemsIdByUserId(ctx context.Context, userId string) ([]string, e.ApiError) {
+	return nil, nil
+}

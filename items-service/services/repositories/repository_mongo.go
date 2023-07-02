@@ -152,3 +152,28 @@ func (repo *RepositoryMongoDB) DeleteItem(ctx context.Context, id string) e.ApiE
 	}
 	return nil
 }
+
+func (repo *RepositoryMongoDB) GetItemsIdByUserId(ctx context.Context, userId string) ([]string, e.ApiError) {
+	cursor, err := repo.Database.Collection(repo.Collection).Find(ctx, bson.M{
+		"userID": userId,
+	})
+	if err != nil {
+		return nil, e.NewInternalServerApiError(fmt.Sprintf("error getting items for userID %s", userId), err)
+	}
+	defer cursor.Close(ctx)
+
+	var itemIDs []string
+	for cursor.Next(ctx) {
+		var item model.ItemEdit
+		if err := cursor.Decode(&item); err != nil {
+			return nil, e.NewInternalServerApiError(fmt.Sprintf("error decoding item for userID %s", userId), err)
+		}
+		itemIDs = append(itemIDs, item.Id.Hex())
+	}
+
+	if err := cursor.Err(); err != nil {
+		return nil, e.NewInternalServerApiError(fmt.Sprintf("error iterating items for userID %s", userId), err)
+	}
+
+	return itemIDs, nil
+}
