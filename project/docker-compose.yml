@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  mysql_users:
-    container_name: "users_database"
+  mysql_database:
+    container_name: "mysql_database"
     image: mysql:8.0.23
     networks: 
       - default
@@ -11,10 +11,11 @@ services:
       - "3306:3306"
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: "password"
-      MYSQL_DATABASE: "users"
+      MYSQL_DATABASE: "project"
       MYSQL_USER: "user"
       MYSQL_PASSWORD: "password"
     command: --default-authentication-plugin=mysql_native_password
+  
   rabbit:
     image: rabbitmq:3-management
     ports:
@@ -76,6 +77,17 @@ services:
     restart: always
     ports:
       - "8081:8081"
+    deploy:
+      mode: replicated
+      replicas: 1
+  comements-service:
+    container_name: "comments-service"
+    build:
+      context: ./../comments-service
+      dockerfile: ./../comments-service/comments-service.dockerfile
+    restart: always
+    ports:
+      - "8100:8100"
     deploy:
       mode: replicated
       replicas: 1

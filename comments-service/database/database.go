@@ -1,10 +1,8 @@
 package database
 
 import (
-	userClient "user/clients/user"
-	userModel "user/models"
-
-	data "user/database/data"
+	commentClient "comments/clients/comments"
+	commentModel "comments/models"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -19,7 +17,7 @@ var (
 func init() {
 	// DB Connections Paramters
 	DBName := "project" //variable de entorno para nombre de la base de datos
-	DBUser := "user"    //variable de entorno para el usuario de la base de datos
+	DBUser := "user"     //variable de entorno para el usuario de la base de datos
 	//DBPass := ""
 	DBPass := "password" //variable de entorno para la pass de la base de datos
 	DBHost := "mysql_database"
@@ -37,15 +35,14 @@ func init() {
 	}
 
 	// We need to add all CLients that we build
-	userClient.Db = db
+	commentClient.Db = db
 
 }
 
 func StartDbEngine() {
 
 	// We need to migrate all classes model.
-	db.AutoMigrate(&userModel.User{})
+	db.AutoMigrate(&commentModel.Comment{})
 
 	log.Info("Finishing Migration Database Tables")
-	data.InsertData(db)
 }
