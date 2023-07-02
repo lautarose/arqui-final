@@ -187,6 +187,19 @@ func (serv *ServiceImpl) DeleteItem(ctx context.Context, id string) e.ApiError {
 	return nil
 }
 
+func (serv *ServiceImpl) GetItemsIdByUserId(ctx context.Context, userId string) ([]string, e.ApiError) {
+	itemsIds, apiErr := serv.db.GetItemsIdByUserId(ctx, userId)
+	if apiErr != nil {
+		return []string{}, apiErr
+	}
+
+	if len(itemsIds) == 0 {
+		return []string{}, e.NewNotFoundApiError(fmt.Sprintf("items not found for user ID: %s", userId))
+	}
+
+	return itemsIds, nil
+}
+
 func downloadImage(url, name, folder string) error {
 	// Crear la ruta completa de la imagen
 
@@ -216,13 +229,4 @@ func downloadImage(url, name, folder string) error {
 
 	fmt.Printf("%s downloaded succesfully! \n", name)
 	return nil
-}
-
-func (serv *ServiceImpl) GetItemsIdByUserId(ctx context.Context, userId string) ([]string, e.ApiError) {
-	dbItems, apiErr := serv.db.GetItemsIdByUserId(ctx, userId)
-	if apiErr != nil {
-		return nil, apiErr
-	}
-
-	return dbItems, nil
 }

@@ -6,6 +6,7 @@ import (
 	"items/dtos"
 	model "items/models"
 	e "items/utils/errors/errors"
+	"strconv"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -153,27 +154,33 @@ func (repo *RepositoryMongoDB) DeleteItem(ctx context.Context, id string) e.ApiE
 	return nil
 }
 
-func (repo *RepositoryMongoDB) GetItemsIdByUserId(ctx context.Context, userId string) ([]string, e.ApiError) {
-	cursor, err := repo.Database.Collection(repo.Collection).Find(ctx, bson.M{
-		"userID": userId,
-	})
+func (repo *RepositoryMongoDB) GetItemsIdByUserId(ctx context.Context, id string) ([]string, e.ApiError) {
+	Id, err := strconv.Atoi(id)
 	if err != nil {
-		return nil, e.NewInternalServerApiError(fmt.Sprintf("error getting items for userID %s", userId), err)
+		return nil, e.NewInternalServerApiError(fmt.Sprintf("error converting id to int: %s", err), err)
+	}
+	filter := bson.M{"user_id": Id} // Filtrar por el ID de usuario
+
+	cursor, err := repo.Database.Collection(repo.Collection).Find(ctx, filter)
+	if err != nil {
+		return nil, e.NewInternalServerApiError(fmt.Sprintf("error getting items for user %s", id), err)
 	}
 	defer cursor.Close(ctx)
 
-	var itemIDs []string
+	var itemsIds []string
+
 	for cursor.Next(ctx) {
 		var item model.ItemEdit
 		if err := cursor.Decode(&item); err != nil {
-			return nil, e.NewInternalServerApiError(fmt.Sprintf("error decoding item for userID %s", userId), err)
+			return nil, e.NewInternalServerApiError(fmt.Sprintf("error decoding item for user %s", id), err)
 		}
-		itemIDs = append(itemIDs, item.Id.Hex())
+
+		itemsIds = append(itemsIds, item.Id.Hex())
 	}
 
 	if err := cursor.Err(); err != nil {
-		return nil, e.NewInternalServerApiError(fmt.Sprintf("error iterating items for userID %s", userId), err)
+		return nil, e.NewInternalServerApiError(fmt.Sprintf("error iterating over items for user %s", id), err)
 	}
 
-	return itemIDs, nil
+	return itemsIds, nil
 }

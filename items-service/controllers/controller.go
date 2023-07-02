@@ -30,6 +30,15 @@ func (ctrl *Controller) GetItemById(c *gin.Context) {
 	c.JSON(http.StatusOK, item)
 }
 
+func (ctrl *Controller) GetItemsIdByUserId(c *gin.Context) {
+	items, apiErr := ctrl.service.GetItemsIdByUserId(c.Request.Context(), c.Param("id"))
+	if apiErr != nil {
+		c.JSON(apiErr.Status(), apiErr)
+		return
+	}
+	c.JSON(http.StatusOK, items)
+}
+
 func (ctrl *Controller) InsertItems(c *gin.Context) {
 
 	auth := c.GetHeader("Authorization")

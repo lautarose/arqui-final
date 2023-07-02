@@ -3,7 +3,7 @@ package model
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type ItemEdit struct {
-	Id          primitive.ObjectID `bson:"id"`
+	Id          primitive.ObjectID `bson:"_id"`
 	UserID      int                `bson:"user_id"`
 	Title       string             `bson:"title"`
 	Seller      string             `bson:"seller"`

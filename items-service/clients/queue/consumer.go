@@ -57,7 +57,7 @@ func consumeMessages(queue string, msgs <-chan amqp.Delivery) {
 }
 
 func handleDeleteMessage(body []byte) {
-	log.Println("handle user:", string(body))
+
 	/*id := string(body)
 
 	res, err := getItems(id)
