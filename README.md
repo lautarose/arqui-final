@@ -1,2 +1,4 @@
-# arqui-final
-Proyecto para el final de Arquitectura de Software
+# Proyecto-Arqui-Soft-II
+
+## para ejecutar: 
+- docker compose up
