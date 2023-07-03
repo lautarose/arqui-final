@@ -10,6 +10,7 @@ func StartApp() {
 
 	// Configurar el middleware CORS
 	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
 	config.AllowHeaders = append(config.AllowHeaders, "Authorization")
 	router.Use(cors.New(config))
 
