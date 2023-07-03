@@ -5,6 +5,7 @@ import Home from './home.js';
 import Login from './login.js';
 import ProductDetail from './ProductDetails'
 import Search from './Search.js';
+import Create from './create.js'
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
       <Route path="/search/:term" element={<Search />} />
       <Route path="/product/:id" element={<ProductDetail/>} />
       <Route path="/login" element={<Login/>} />
+      <Route path="/create" element={<Create/>} />
       </Routes>
     </Router>
   );
