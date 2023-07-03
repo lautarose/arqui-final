@@ -41,7 +41,7 @@ func Consume() error {
 		msgs, err := ch.Consume(
 			q.Name, // queue
 			"",     // consumer
-			true,   // auto-ack
+			false,  // auto-ack
 			false,  // exclusive
 			false,  // no-local
 			false,  // no-wait

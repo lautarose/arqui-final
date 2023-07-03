@@ -86,3 +86,15 @@ func DeleteComment(commentId int) (model.Comment, error) {
 
 	return comment, nil
 }
+
+func DeleteCommentsByUserId(userId int) error {
+	err := Db.Where("user_id = ?", userId).Delete(&model.Comment{}).Error
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	log.Debug("Comments deleted for user_id: ", userId)
+
+	return nil
+}

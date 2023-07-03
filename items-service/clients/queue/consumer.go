@@ -24,12 +24,12 @@ func Consume() error {
 	}
 
 	q, err := ch.QueueDeclare(
-		"users-delete-queue", // name
-		false,                // durable
-		false,                // delete when unused
-		false,                // exclusive
-		false,                // no-wait
-		nil,                  // arguments
+		"users-items-delete-queue", // name
+		false,                      // durable
+		false,                      // delete when unused
+		false,                      // exclusive
+		false,                      // no-wait
+		nil,                        // arguments
 	)
 	if err != nil {
 		return err
@@ -48,7 +48,7 @@ func Consume() error {
 		return err
 	}
 
-	go consumeMessages("users-delete-queue", msgs)
+	go consumeMessages("users-items-delete-queue", msgs)
 
 	log.Printf(" [*] Waiting for messages. To exit, press CTRL+C")
 	select {}
