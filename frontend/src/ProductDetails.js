@@ -3,11 +3,13 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardMedia, Typography, Grid } from "@mui/material";
 import { Link } from 'react-router-dom';
 import Navbar from './components/navbar';
+import { CommentList } from './components/comment';
 
 const ProductDetails = () => {
   const { id } = useParams();
-  const url = "http://localhost:8080/search/"+id;
+  const url = "http://localhost:8080/search/" + id;
   const [products, setProducts] = useState([]);
+  const [comments, setComments] = useState([]);
 
   const fetchApi = async () => {
     try {
@@ -18,12 +20,22 @@ const ProductDetails = () => {
       console.error('Error fetching products:', error);
     }
   };
-  
+
+  const fetchComments = async () => {
+    try {
+      const commentsUrl = `http://localhost:8100/comments/${id}`;
+      const response = await fetch(commentsUrl);
+      const responseJSON = await response.json();
+      setComments(responseJSON);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    }
+  };
+
   useEffect(() => {
     fetchApi();
+    fetchComments();
   }, []);
-
-  // Resto del código de tu componente ProductDetails
 
   return (
     <div className='container'>
@@ -49,11 +61,12 @@ const ProductDetails = () => {
                   Description: {product.description[0]}
                 </Typography>
               </CardContent>
-           
             </Card>
           </Grid>
         ))}
       </Grid>
+
+      <CommentList comments={comments} />
     </div>
   );
 };
