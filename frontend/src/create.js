@@ -28,7 +28,8 @@ const Create = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    const parsedPrice = parseFloat(price);
+    const parsedNumber = parseFloat(number);
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -39,14 +40,14 @@ const Create = () => {
         {
           title,
           seller,
-          price,
+          parsedPrice,
           currency,
           picture,
           description,
           state,
           city,
           street,
-          number
+          parsedNumber
         }
       ])
     };
