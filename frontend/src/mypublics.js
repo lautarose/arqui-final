@@ -1,44 +1,40 @@
 import React, { useEffect, useState } from 'react';
-
-var token = getCookie("user");
-function getCookie(name) {
-  var cookieValue = null;
-  if (document.cookie && document.cookie !== '') {
-    var cookies = document.cookie.split(';');
-    for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i].trim();
-      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-        break;
-      }
-    }
-  }
-  return cookieValue;
-}
+import Cookies from "universal-cookie";
+const Cookie = new Cookies();
 
 const Publics = () => {
+  const [token, setToken] = useState("");
+  const [userId, setUserId] = useState("");
 
-  fetch('http://localhost:8081/user/' + token)
-  .then(response => response.json())
-  .then(data => {
-    var userId = data.userId;
-    fetch('http://localhost:8090/items/user/' + userId)
-  .then(response => response.json())
-  .then(data => {
-    // Aquí puedes utilizar los datos de las publicaciones para mostrarlos en la página.
-    console.log(data);
+  useEffect(() => {
+    loadTokenFromCookie();
+  }, []);
+
+  const loadTokenFromCookie = () => {
+    const userToken = Cookie.get('user');
+    setToken(userToken);
+  };
+
+  useEffect(() => {
+    fetch('http://localhost:8081/user', {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
     })
-     .catch(error => {
-      console.error('Error:', error);
-    });
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+      .then(response => response.json())
+      .then(data => {
+        setUserId(data.id);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, [token]);
 
-  return (
-    <div>hola</div>
-  );
+    return (
+      <div>
+        <h1>User ID: {userId}</h1>
+      </div>
+    );
 }
 
 export default Publics;
