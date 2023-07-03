@@ -6,6 +6,7 @@ import Login from './login.js';
 import ProductDetail from './ProductDetails'
 import Search from './Search.js';
 import Create from './create.js'
+import Publics from "./mypublics";
 
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
       <Route path="/product/:id" element={<ProductDetail/>} />
       <Route path="/login" element={<Login/>} />
       <Route path="/create" element={<Create/>} />
+      <Route path="/mypublics" element={<Publics/>} />
+
       </Routes>
     </Router>
   );

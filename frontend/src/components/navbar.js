@@ -54,6 +54,11 @@ const Navbar = () => {
               CREAR PUBLICACIÓN
             </Button>
             </Link>
+            <Link to="/mypublics">
+            <Button  sx={{color: grey[300], transform: 'scale(1)', transition: 'transform 0.3s', '&:hover': {color: blue[500],transform: 'scale(1.1)'}}}>
+              MIS PUBLICACIONES
+            </Button>
+            </Link>
           </div>
         ) : (
           // Elementos que se mostrarán si el usuario no está logueado
