@@ -1,4 +1,4 @@
-# Proyecto-Arqui-Soft-II
+# Proyecto final Arquitectura de Software II
 
 ## para ejecutar: 
 - cd project
