@@ -7,7 +7,12 @@ import (
 
 func StartApp() {
 	router := gin.Default()
-	router.Use(cors.Default())
+
+	// Configurar el middleware CORS
+	config := cors.DefaultConfig()
+	config.AllowHeaders = append(config.AllowHeaders, "Authorization")
+	router.Use(cors.New(config))
+
 	deps := BuildDependencies()
 	MapUrls(router, deps)
 	_ = router.Run(":8090")
