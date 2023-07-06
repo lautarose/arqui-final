@@ -28,8 +28,27 @@ const Create = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const parsedPrice = parseFloat(price);
-    const parsedNumber = parseFloat(number);
+
+    // Verificar si algún campo está vacío
+    if (
+      !title ||
+      !seller ||
+      !price ||
+      !currency ||
+      !picture ||
+      !description ||
+      !state ||
+      !city ||
+      !street ||
+      !number
+    ) {
+      swal.fire({
+        text: "Debes rellenar todos los campos",
+        icon: 'error'
+      });
+      return; // Detener la ejecución si hay campos vacíos
+    }
+
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -40,14 +59,14 @@ const Create = () => {
         {
           title,
           seller,
-          parsedPrice,
+          price,
           currency,
           picture,
           description,
           state,
           city,
           street,
-          parsedNumber
+          number
         }
       ])
     };
@@ -98,22 +117,20 @@ const Create = () => {
           Crear Publicación
         </Typography>
         <Box component="form" sx={{ mt: 1 }}>
-
           <TextField label="Título" type="text" value={title} onChange={(event) => setTitle(event.target.value)} variant="outlined" margin="normal" required fullWidth />
           <TextField label="Seller" type="text" value={seller} onChange={(event) => setSeller(event.target.value)} variant="outlined" margin="normal" required fullWidth />
-          <TextField label="Price" type="number" value={price} onChange={(event) => setPrice(event.target.value)} variant="outlined" margin="normal" required fullWidth />
+          <TextField label="Price" type="number" value={price} onChange={(event) => setPrice(Number(event.target.value))} variant="outlined" margin="normal" required fullWidth />
           <TextField label="Currency" type="text" value={currency} onChange={(event) => setCurrency(event.target.value)} variant="outlined" margin="normal" required fullWidth />
           <TextField label="Picture (URL)" type="url" value={picture} onChange={(event) => setPicture(event.target.value)} variant="outlined" margin="normal" required fullWidth />
           <TextField label="Description" type="text" value={description} onChange={(event) => setDescription(event.target.value)} variant="outlined" margin="normal" required fullWidth />
           <TextField label="State" type="text" value={state} onChange={(event) => setState(event.target.value)} variant="outlined" margin="normal" required fullWidth />
           <TextField label="City" type="text" value={city} onChange={(event) => setCity(event.target.value)} variant="outlined" margin="normal" required fullWidth />
-          <TextField label="Streer" type="text" value={street} onChange={(event) => setStreet(event.target.value)} variant="outlined" margin="normal" required fullWidth />
-          <TextField label="Number" type="number" value={number} onChange={(event) => setNumber(event.target.value)} variant="outlined" margin="normal" required fullWidth />
-   
+          <TextField label="Street" type="text" value={street} onChange={(event) => setStreet(event.target.value)} variant="outlined" margin="normal" required fullWidth />
+          <TextField label="Number" type="number" value={number} onChange={(event) => setNumber(Number(event.target.value))} variant="outlined" margin="normal" required fullWidth />
+
           <Button type="button" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleSubmit}>
             Crear Publicación
           </Button>
-
         </Box>
       </Box>
     </Container>
