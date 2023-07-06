@@ -42,6 +42,7 @@ const Publics = () => {
       .then(response => {
         if (response.ok) {
           fetchPublications();
+          window.location.replace("/mypublics")
         } else {
           console.error('Error deleting publication:', response.statusText);
         }

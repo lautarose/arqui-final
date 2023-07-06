@@ -34,6 +34,7 @@ const SignupForm = () => {
         if (response.ok) {
           // Registro exitoso
           Swal.fire('¡Registro exitoso!', 'Usuario registrado correctamente.', 'success');
+          window.location.replace("/")
         } else {
           // Error en el registro
           Swal.fire('Error', 'No se pudo registrar el usuario.', 'error');
